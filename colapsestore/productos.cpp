@@ -1,7 +1,9 @@
 #include "productos.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <Windows.h>
+
 
 using namespace std;
 
@@ -13,6 +15,7 @@ productos::productos()
 	string tipo = "";
     string precio = "";
 }
+
 void productos::crear_objetos(string _nombre, string _marca, string _tipo, string _precios, string _numeroserie)
 {   
     nombre =_nombre;

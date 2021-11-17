@@ -13,24 +13,29 @@ class usuario{
 		string documentoIdentidad;
 		string correo;
 		string contrasena;
-		string direccion;		
+		string ID;
+		string direccion;
+		string telefono;
 
 	public:
-		usuario(string, string, string, string, string);
-		
+		usuario(string, string, string, string, string, string, string);
+		usuario(string);
+		//metodos:
+		//void registrar_usuario();
+		//void logear_usuario();	
 };
 
 class administrador : public usuario{
-	public:
-		
+	public:	
 		string codigoAministrador;
 
-		administrador(string, string, string, string, string, string);
+	public:
+		administrador(string, string, string, string, string, string, string, string);
 
 		void agregar_producto(ofstream &inventario);
 		void ver_productos(ifstream& inventario);
 		void modificar_inventario(ifstream &inventario);
-		void eliminar_inventario(ifstream &inventario);		
+		void eliminar_inventario(ifstream &inventario);
 };
 
 

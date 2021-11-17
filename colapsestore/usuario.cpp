@@ -1,47 +1,56 @@
 #include "usuario.h"
-
+#include "librerias.h"
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <Windows.h>
 
+
 using namespace std;
 
-usuario::usuario (string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _direccion)
+usuario::usuario(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono)
 {
 	nombre = _nombre;
 	documentoIdentidad = _documentoIdentidad;
 	correo = _correo;
 	contrasena = _contrasena;
+    ID = _ID;
 	direccion = _direccion;
+    telefono = _telefono;
 }
-
-
+usuario::usuario(string _ID) {
+    ID = _ID;
+}
 
 //----------------------Adminstrador--------------------------------------
 
 
-administrador::administrador(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _direccion, string _codigoAministrador) : usuario(_nombre, _documentoIdentidad, _correo, _contrasena, _direccion)
+administrador::administrador(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono, string _codigoAministrador) : usuario(_nombre, _documentoIdentidad, _correo, _contrasena, _ID, _direccion, _telefono)
 {
     codigoAministrador = _codigoAministrador;
 }
 
+
 void administrador::agregar_producto(ofstream& inventario)
 {
+    string _nombre, _marca, _tipo, _precios;
+    string _numeroserie;
 	system("cls");
-
-    string _nombre, _marca, _tipo, _precios, _numeroserie;
-
     cout << "Ingrese el numero de serie del producto: ";
-    cin >> _numeroserie;
+    cin.ignore();
+    getline(cin, _numeroserie);
+    _numeroserie = nosepara(_numeroserie);
     cout << "Ingrese el nombre del producto: ";
-    cin >> _nombre;
+    getline(cin, _nombre);
+    _nombre = nosepara(_nombre);
     cout << "Ingrese la marca del producto: ";
-    cin>> _marca;
+    getline(cin, _marca);
+    _marca = nosepara(_marca);
     cout << "Ingrese el tipo del producto: ";
-    cin >> _tipo;
+    getline(cin, _tipo);
+    _tipo=nosepara(_tipo);
     cout << "Ingrese el precio del producto: ";
-    cin >> _precios;
-    
+    getline(cin, _precios);
 
 	inventario.open("inventario.txt", ios::out | ios::app);
 
@@ -226,4 +235,5 @@ void administrador::eliminar_inventario(ifstream& inventario)
         Sleep(1500);
     }
     remove("inventario.txt");
-    rename("auxiliar_inventario.txt", "inventario.txt");}
+    rename("auxiliar_inventario.txt", "inventario.txt");
+}
