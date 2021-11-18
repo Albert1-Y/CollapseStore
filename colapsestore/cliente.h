@@ -3,9 +3,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-
 #include"usuario.h"
-
+#include"productos.h"
 
 class cliente:public usuario
 {
@@ -15,6 +14,10 @@ class cliente:public usuario
 	public:
 		cliente();
 		void setCliente(string);
+		void ver_productos(productos*& producto, ifstream& inventario);
+
+
+
 
 
 
@@ -25,13 +28,15 @@ class cliente:public usuario
 	// void carritoCompra(ofstream& historial);
 };
 
-
 class carritoCompra
-{	public:
+{	
+	public:
 		string ID;
+		string saldo;
 	public:
 		carritoCompra();
-		void setcarritoCompra(string);
+		void setcarritoCompra(string _ID, string _saldo);
+		//void cancelar_compra();
 	//void	
 };
 

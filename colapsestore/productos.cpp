@@ -23,7 +23,3 @@ void productos::crear_objetos(string _nombre, string _marca, string _tipo, strin
     numeroSerie = _numeroserie;
 }
 
-
-
-
-

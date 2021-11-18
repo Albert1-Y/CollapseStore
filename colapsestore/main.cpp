@@ -11,16 +11,22 @@ int main()
 {   
     ofstream EXP;
 	ifstream Lec;
-	int n= 0;
-	n = contdor_productos(Lec);
-	productos *registro_productos= new productos[n];
+
+	int tamano_producto = contdor_productos(Lec);
+    int tamano_usuario = contdor_usuario(Lec);
+	productos *registro_productos= new productos[tamano_producto];
+    cliente * registro_usuario = new cliente[tamano_usuario];
     cliente cliente_unico;
     administrador admin;
-    /*admin.setUsuario("NombrePepito", "DNI7030", "pepito@gmail.com", "contra123456781", "ID1234", "Arequipa", "telefono123545");
-    arreaglo_de_objetos(registro_productos,Lec);*/
+    //cout << tamano_usuario;
 
+    
+    /*admin.setUsuario("NombrePepito", "DNI7030", "pepito@gmail.com", "contra123456781", "ID1234", "Arequipa", "telefono123545");*/
+    arreaglo_de_objetos(registro_productos,Lec);
+
+    
     int m = 0;
-	int opcion;
+	int opcion = 0;
     do
     {
         opcion = menu();
@@ -33,11 +39,11 @@ int main()
 
             if (cliente_unico.codigocliente == "CLIENTE")
             {
-
+                clienteMetodos(cliente_unico, registro_productos, Lec, EXP);
             }
             else if (admin.codigoAministrador == "ADMINISTRADOR")
             {
-                adminMetodos(admin,Lec,EXP);
+                adminMetodos(registro_usuario,admin,Lec,EXP,tamano_usuario);
             }
             //admin.agregar_producto(EXP);
             //n = contdor_productos(Lec);
@@ -53,22 +59,21 @@ int main()
             break;
 
         case 4: //Modificar producto
-            /*admin.modificar_inventario(Lec);
-            n = contdor_productos(Lec);
-            modificar_arrays(registro_productos, n, Lec);*/
+            //admin.modificar_inventario(Lec);
+            //n = contdor_productos(Lec);
+            //modificar_arrays(registro_productos, n, Lec);
             break;
-        /* case 5: //Eliminar producto
-            admin.eliminar_inventario(Lec);
-            n = contdor_productos(Lec);
-            modificar_arrays(registro_productos, n, Lec);
-            break;*/
+         case 5: //Eliminar producto
+            //admin.eliminar_inventario(Lec);
+            //n = contdor_productos(Lec);
+            //modificar_arrays(registro_productos, n, Lec);
+            break;
         default:
             cout << "Por favor seleccione una opción valida";
             break;
         }
     }
     while (opcion != 4);
-
-
+    
 	return 0;
 }
