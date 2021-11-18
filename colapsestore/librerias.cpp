@@ -420,8 +420,10 @@ void inciar_sesion(ifstream& inventario,cliente &cliente_1,administrador & admin
 
 void imprime_user_objeto(cliente *& cliente_1,int tamano)
 {
+    system("cls");
     for(int i=0;i<tamano;i++){
         cout << cliente_1[i].nombre << "\n";
     }
+    system("pause");
 }
 

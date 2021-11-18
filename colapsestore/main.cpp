@@ -13,7 +13,7 @@ int main()
 	ifstream Lec;
 
 	int tamano_producto = contdor_productos(Lec);
-    int tamano_usuario = contdor_usuario(Lec);
+    int tamano_usuario = contador_usuario(Lec);
 	productos *registro_productos= new productos[tamano_producto];
     cliente * registro_usuario = new cliente[tamano_usuario];
     cliente cliente_unico;

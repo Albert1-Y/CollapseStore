@@ -15,7 +15,7 @@ void areglos_de_usuarios(cliente*& cliente_1, ifstream& inventario);
 
 int contdor_productos(ifstream& inventario);
 
-int contdor_usuario(ifstream& inventario);
+int contador_usuario(ifstream& inventario);
 
 int menu();
 
