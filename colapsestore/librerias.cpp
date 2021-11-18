@@ -120,9 +120,12 @@ void areglos_de_usuarios(cliente *& cliente_1,ifstream & inventario){
             inventario >> direccion;
             inventario >> telefono;
             inventario >> tipo_usuario;
-            cliente_1[n].setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
-            cliente_1[n].setCliente(tipo_usuario);
-            n = n + 1;
+            if (tipo_usuario=="CLIENTE") {
+                cliente_1[n].setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
+                cliente_1[n].setCliente(tipo_usuario);
+                n = n + 1;
+            }
+            
             inventario >>nombre ;
         }
         inventario.close();
@@ -180,7 +183,10 @@ int contador_usuario(ifstream &inventario)
             inventario >> direccion;
             inventario >> telefono;
             inventario >> tipo_usuario;
-            n = n + 1;
+            if (tipo_usuario=="CLIENTE") {
+                n = n + 1;
+            }
+            
             inventario >>nombre ;
         }
         inventario.close();
@@ -224,10 +230,10 @@ int menuAdministrador()
 }
 
 
-void adminMetodos(cliente * & cliente1 ,administrador admin,ifstream &Lec,ofstream &EXP,int tamano_users)
+void adminMetodos(productos*& producto , cliente*& cliente1, administrador admin, ifstream& Lec, ofstream& EXP, int tamano_users)
 {
     int opcionAdmin = 0;
-
+    int n;
     do
     {
         opcionAdmin = menuAdministrador();
@@ -236,15 +242,21 @@ void adminMetodos(cliente * & cliente1 ,administrador admin,ifstream &Lec,ofstre
         {
         case 1:
             admin.agregar_producto(EXP);
+            n = contdor_productos(Lec);
+            modificar_arrays(producto,n,Lec);
             break;
         case 2:
             admin.ver_productos(Lec);
             break;
         case 3:
             admin.modificar_inventario(Lec);
+            n = contdor_productos(Lec);
+            modificar_arrays(producto, n, Lec);
             break;
         case 4:
             admin.eliminar_inventario(Lec);
+            n = contdor_productos(Lec);
+            modificar_arrays(producto, n, Lec);
                 break;
         case 5:
             //Ver clientes
@@ -294,24 +306,20 @@ void clienteMetodos(cliente clienteM, productos *& producto , ifstream& Lec, ofs
     do
     {
         opcionAdmin = menuCliente();
-
         switch (opcionAdmin)
         {
-        case 1: // ver productos modo cliente
+        case 1: 
             clienteM.ver_productos(producto, Lec);
             break;
-        case 2: // ver categorias de productos modo cliente
-            //cliente.ver_categorias(Lec);
+        case 2: 
             break;
-        case 3: // ver carrito de compras
-            //
+        case 3: 
+            clienteM.ver_productos(producto, Lec);
             break;
         default:
             cout << "Por favor seleccione una opción valida";
             break;
         }
-
-
     } while (opcionAdmin != 4);
 
 }

@@ -21,7 +21,7 @@ int menu();
 
 int menuAdministrador();
 
-void adminMetodos(cliente*& cliente1, administrador admin, ifstream& Lec, ofstream& EXP, int tamano_users);
+void adminMetodos(productos *& producto,cliente*& cliente1, administrador admin, ifstream& Lec, ofstream& EXP, int tamano_users);
 
 int menuCliente();
 

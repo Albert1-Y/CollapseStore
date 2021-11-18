@@ -43,7 +43,7 @@ int main()
             }
             else if (admin.codigoAministrador == "ADMINISTRADOR")
             {
-                adminMetodos(registro_usuario,admin,Lec,EXP,tamano_usuario);
+                adminMetodos(registro_productos,registro_usuario,admin,Lec,EXP,tamano_usuario);
             }
             //admin.agregar_producto(EXP);
             //n = contdor_productos(Lec);
@@ -56,6 +56,7 @@ int main()
             //crea_cuenta_cliente( EXP);
             break;
         case 3: //Buscar producto
+
             break;
 
         case 4: //Modificar producto
