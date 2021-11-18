@@ -18,8 +18,9 @@ class usuario{
 		string telefono;
 
 	public:
-		usuario(string, string, string, string, string, string, string);
-		usuario(string);
+		usuario();
+		void setUsuario(string, string, string, string, string, string, string);
+
 		//metodos:
 		//void registrar_usuario();
 		//void logear_usuario();	
@@ -30,7 +31,8 @@ class administrador : public usuario{
 		string codigoAministrador;
 
 	public:
-		administrador(string, string, string, string, string, string, string, string);
+		administrador();
+		void setadmin(string);
 
 		void agregar_producto(ofstream &inventario);
 		void ver_productos(ifstream& inventario);

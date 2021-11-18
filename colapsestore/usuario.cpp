@@ -8,28 +8,36 @@
 
 using namespace std;
 
-usuario::usuario(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono)
-{
-	nombre = _nombre;
-	documentoIdentidad = _documentoIdentidad;
-	correo = _correo;
-	contrasena = _contrasena;
-    ID = _ID;
-	direccion = _direccion;
-    telefono = _telefono;
+usuario::usuario(){
+	nombre = "";
+	documentoIdentidad = "";
+	correo = "";
+	contrasena = "";
+    ID = "";
+	direccion = "";
+    telefono = "";
 }
-usuario::usuario(string _ID) {
-    ID = _ID;
-}
+
 
 //----------------------Adminstrador--------------------------------------
 
+administrador::administrador() {
+    codigoAministrador = "";
+}
 
-administrador::administrador(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono, string _codigoAministrador) : usuario(_nombre, _documentoIdentidad, _correo, _contrasena, _ID, _direccion, _telefono)
-{
+void administrador::setadmin(string _codigoAministrador){
     codigoAministrador = _codigoAministrador;
 }
 
+void usuario::setUsuario(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono){
+    nombre = _nombre;
+	documentoIdentidad = _documentoIdentidad;
+	correo = _correo;
+	contrasena = _contrasena;
+	ID = _ID;
+	direccion = _direccion;
+	telefono = _telefono;
+}
 
 void administrador::agregar_producto(ofstream& inventario)
 {
