@@ -2,7 +2,7 @@
 #include"cliente.h"
 #include"usuario.h"
 #include <string>
-
+#include"adminitrador.h"
 
 string nosepara(string dato);
 string separa(string dato);

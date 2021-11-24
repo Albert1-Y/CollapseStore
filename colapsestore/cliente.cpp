@@ -3,32 +3,30 @@
 #include <fstream>
 #include <Windows.h>
 #include <cstdlib>
-
 #include "cliente.h"
 #include "librerias.h"
 #include "usuario.h"
-#include "productos.h"
-
+//#include "productos.h"
 
 using namespace std;
-
 
 cliente::cliente()
 {
     codigocliente = "";
 }
 
-void cliente::setCliente(string _codigocliente)/* :usuario(_nombre, _documentoIdentidad, _correo, _contrasena, _ID, _direccion, _telefono)*/
-{
+
+void cliente::setCliente(string _codigocliente) {
     codigocliente = _codigocliente;
 }
 
 /*
-void cliente::crea_cliente(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono, string _codigocliente)  : usuario(_nombre, _documentoIdentidad, _correo, _contrasena, _ID, _direccion, _telefono)
+
+void crea_cliente(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono, string _codigocliente) : usuario(_nombre, _documentoIdentidad, _correo, _contrasena, _ID, _direccion, _telefono)
 {
 }
-
 */
+
 
 void cliente::ver_productos(productos*& producto, ifstream& inventario)
 {   system("cls");
@@ -50,10 +48,7 @@ void cliente::ver_productos(productos*& producto, ifstream& inventario)
 }
 
 
-//----------------------------------------------------------
-
-carritoCompra::carritoCompra()
-{
+carritoCompra::carritoCompra() {
     ID = "";
     saldo = "";
 }
@@ -64,5 +59,3 @@ void carritoCompra::setcarritoCompra(string _ID, string _saldo)
     ID = _ID;
     saldo = _saldo;
 }
-
-

@@ -2,8 +2,8 @@
 #include "usuario.h"
 #include "librerias.h"
 #include "cliente.h"
-#include "arrays_objetos.h"
-
+#include"arrays_objetos.h"
+#include"adminitrador.h"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -13,11 +13,14 @@ int main()
     ofstream EXP;
 	ifstream Lec;
     arrays_objetos productos1;
+    productos1.set_crea_arrays_productos(Lec);
+    productos1.setarrays_objetos(Lec);
+   
 	int tamano_producto = contdor_productos(Lec);
     int tamano_usuario = contador_usuario(Lec);
 	productos *registro_productos= new productos[tamano_producto];
-    //cliente * registro_usuario = new cliente[tamano_usuario];
-    //cliente cliente_unico;
+    cliente * registro_usuario = new cliente[tamano_usuario];
+    cliente cliente_unico;
     administrador admin;
     //cout << tamano_usuario;
 
@@ -34,18 +37,18 @@ int main()
         switch (opcion)
         {
         case 1: //Registrar producto
-            //inciar_sesion(Lec,cliente_unico,admin);
+            inciar_sesion(Lec,cliente_unico,admin);
             cout << admin.codigoAministrador;
             system("pause");
 
-            //if (cliente_unico.codigocliente == "CLIENTE")
-            //{
-            //    clienteMetodos(cliente_unico, registro_productos, Lec, EXP);
-            //}
-            //else if (admin.codigoAministrador == "ADMINISTRADOR")
-            //{
-            //    adminMetodos(registro_productos,registro_usuario,admin,productos1,tamano_usuario);
-            //}
+            if (cliente_unico.codigocliente == "CLIENTE")
+            {
+                clienteMetodos(cliente_unico, registro_productos, Lec, EXP);
+            }
+            else if (admin.codigoAministrador == "ADMINISTRADOR")
+            {
+                adminMetodos(registro_productos,registro_usuario,admin,productos1,tamano_usuario);
+            }
             //admin.agregar_producto(EXP);
             //n = contdor_productos(Lec);
             //modificar_arrays(registro_productos,n,Lec);
@@ -57,15 +60,14 @@ int main()
             //crea_cuenta_cliente( EXP);
             break;
         case 3: //Buscar producto
-            //cliente_unico.ver_productos(registro_productos, Lec);
+            cliente_unico.ver_productos(registro_productos, Lec);
             break;
 
         case 4: //Modificar producto
             //admin.modificar_inventario(Lec);
             //n = contdor_productos(Lec);
             //modificar_arrays(registro_productos, n, Lec);
-            productos1.set_crea_arrays_productos(Lec);
-            productos1.setarrays_objetos(Lec);
+            
             //cout<<"\n"<<productos1.arrays_productos->nombre<<"\n";
             cout << "\n" << productos1.arrays_productos[3].nombre << "\n";
   
