@@ -253,14 +253,16 @@ void clienteMetodos(cliente clienteM, productos *& producto , ifstream& Lec, ofs
 }
 
 
-void modificar_arrays(productos*& producto, int nuevo_tamaño, ifstream& inventario) {
+void modificar_arrays(productos*& producto, int nuevo_tamaño, ifstream& inventario)
+{
     delete[] producto;
     producto = new productos[nuevo_tamaño];
     //arreaglo_de_objetos(producto, inventario);
 }
 
 
-void crea_cuenta_cliente(ofstream& inventario) {
+void crea_cuenta_cliente(ofstream& inventario)
+{
     string nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono, tipo_usuario;
     tipo_usuario = "CLIENTE";
     cout << "Digite su nombre completo: ";
@@ -290,7 +292,8 @@ void crea_cuenta_cliente(ofstream& inventario) {
 }
 
 
-void imprime_objeto(productos*& producto, int nuevo_tamaño) {
+void imprime_objeto(productos*& producto, int nuevo_tamaño)
+{
     system("cls");
     for (int i = 0; i < nuevo_tamaño;i++) {
         cout<<"\n"<<producto[i].nombre;
