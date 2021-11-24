@@ -1,6 +1,7 @@
 #pragma once
+
 #include "usuario.h"
-#include"arrays_objetos.h"
+#include "arrays_objetos.h"
 
 class administrador :public usuario {
 	public:

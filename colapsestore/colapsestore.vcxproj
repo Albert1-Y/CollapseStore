@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="administrador.cpp" />
     <ClCompile Include="arrays_objetos.cpp" />
     <ClCompile Include="cliente.cpp" />
     <ClCompile Include="librerias.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="usuario.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="administrador.h" />
     <ClInclude Include="arrays_objetos.h" />
     <ClInclude Include="cliente.h" />
     <ClInclude Include="librerias.h" />

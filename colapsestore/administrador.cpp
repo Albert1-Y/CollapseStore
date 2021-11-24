@@ -1,4 +1,4 @@
-#include "adminitrador.h"
+#include "administrador.h"
 #include "librerias.h"
 
 administrador::administrador()

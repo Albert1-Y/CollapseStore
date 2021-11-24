@@ -11,7 +11,7 @@ class cliente :public usuario
 	public:
 		string codigocliente;
 
-	public:
+	public: 
 		cliente();
 		void setCliente(string);
 		void ver_productos(productos*& producto, ifstream& inventario);

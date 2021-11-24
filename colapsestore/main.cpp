@@ -2,8 +2,9 @@
 #include "usuario.h"
 #include "librerias.h"
 #include "cliente.h"
-#include"arrays_objetos.h"
-#include"adminitrador.h"
+#include "arrays_objetos.h"
+#include "adminitrador.h"
+
 #include <iostream>
 #include <string>
 #include <fstream>
