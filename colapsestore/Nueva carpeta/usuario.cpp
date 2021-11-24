@@ -1,10 +1,10 @@
 #include "usuario.h"
 #include "librerias.h"
-#include"productos.h"
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <Windows.h>
+
 
 using namespace std;
 
@@ -43,74 +43,78 @@ void administrador::setadmin(string _codigoAministrador)
 }
 
 
-void administrador::agregar_producto(arrays_objetos & arrays_producto)
-{   //creamos un array axiliar para no perder los datos de nuestra array original 
-    productos* auxiarrays_productos;
-    auxiarrays_productos = new productos[arrays_producto.tamano_producto];
-    //pasamos los elemento a nuestro nuevo array
-    for (int i = 0; i < arrays_producto.tamano_producto; i++) {
-        auxiarrays_productos[i] = arrays_producto.arrays_productos[i];
-    }
-    //limpiamos nuestro array original creamos nuestro arrays mas 1 lemento 
-    delete[] arrays_producto.arrays_productos;
-    arrays_producto.arrays_productos = new productos[arrays_producto.tamano_producto + 1];
-    //
-    for (int i = 0; i < arrays_producto.tamano_producto; i++) {
-        arrays_producto.arrays_productos[i] = auxiarrays_productos[i];
-    }
-    
-    string _nombre, _marca, _tipo, _precios, _numeroserie, _categoria;
-    system("cls");
-
+void administrador::agregar_producto(ofstream& inventario)
+{
+    string _nombre, _marca, _tipo, _precios;
+    string _numeroserie;
+	system("cls");
     cout << "Ingrese el numero de serie del producto: ";
     cin.ignore();
     getline(cin, _numeroserie);
-    
+    _numeroserie = nosepara(_numeroserie);
     cout << "Ingrese el nombre del producto: ";
     getline(cin, _nombre);
-    
+    _nombre = nosepara(_nombre);
     cout << "Ingrese la marca del producto: ";
     getline(cin, _marca);
-    
-    cout << "Ingrese la categoria del producto: ";
-    getline(cin, _categoria);
-
+    _marca = nosepara(_marca);
     cout << "Ingrese el tipo del producto: ";
     getline(cin, _tipo);
-    
-    while (true) {
-        bool verifica;
-        cout << "Ingrese el precio del producto: ";
-        getline(cin, _precios);
-        verifica = verifica_numero(_precios);
-        if (verifica)
-            break;
-    }
-    arrays_producto.arrays_productos[arrays_producto.tamano_producto].crear_objetos(_nombre, _marca, _categoria,_tipo,_precios,_numeroserie);
-    delete[] auxiarrays_productos;
-    arrays_producto.tamano_producto++;
+    _tipo=nosepara(_tipo);
+    cout << "Ingrese el precio del producto: ";
+    getline(cin, _precios);
 
+	inventario.open("inventario.txt", ios::out | ios::app);
+
+	inventario  << _numeroserie << " " << _nombre << " " << _marca << " " << _tipo << " " << _precios<<"\n";
+
+	inventario.close();
 }
-	
-void administrador::ver_productos(arrays_objetos& arrays_producto)
+
+void administrador::ver_productos(ifstream &inventario)
 {
-    for (int i = 0; i < arrays_producto.tamano_producto; i++) {
+    
+    string nombre, marca, tipo, precio, numeroSerie;    
 
-        cout << "------------------------------------------" << endl;
-        cout << "Numero de Serie-------------: " << arrays_producto.arrays_productos[i].numeroSerie << endl;
-        cout << "Nombre del producto---------: " << arrays_producto.arrays_productos[i].nombre<< endl;
-        cout << "Marca del producto----------: " << arrays_producto.arrays_productos[i].marca << endl;
-        cout << "Categoria del producto------: " << arrays_producto.arrays_productos[i].categoria << endl;
-        cout << "Tipo del producto-----------: " << arrays_producto.arrays_productos[i].tipo << endl;
-        cout << "Precio del producto---------: " << arrays_producto.arrays_productos[i].precio << endl;
-        cout << "------------------------------------------" << endl;
+    inventario.open("inventario.txt", ios::in);
 
+
+    if (inventario.is_open())
+    {
+
+        cout << "------------------------------------------\n----------------Personas Registradas----------------\n------------------------------------------\n\n"; 
+
+        inventario >> numeroSerie;
+
+        while (!inventario.eof())
+        {
+            inventario >> nombre;
+            inventario >> marca;
+            inventario >> tipo;
+            inventario >> precio;
+            
+            cout << "------------------------------------------" << endl;
+            cout << "Numero de Serie-------------: " << numeroSerie << endl;
+            cout << "Nombre del producto---------: " << nombre << endl;
+            cout << "Marca del producto----------: " << marca << endl;
+            cout << "Tipo del producto-----------: " << tipo << endl;
+            cout << "Precio del producto---------: " << precio << endl;
+            cout << "------------------------------------------" << endl;
+            
+            inventario >> numeroSerie;
+        }
+        inventario.close();
     }
+    else
+    {
+        cout << "ERROR\n";
+    }
+
     system("pause");
 }
 
 
-/*void administrador::modificar_inventario(arrays_objetos& arrays_producto)
+void administrador::modificar_inventario(ifstream& inventario)
 {
     system("cls");
 
@@ -245,4 +249,3 @@ void administrador::eliminar_inventario(ifstream& inventario)
     remove("inventario.txt");
     rename("auxiliar_inventario.txt", "inventario.txt");
 }
-*/

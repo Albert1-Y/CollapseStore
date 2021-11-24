@@ -10,15 +10,16 @@ class productos
 {
 	public:
 
-		string nombre;
-		string marca;
-		string precio;
-		string tipo;
+		string nombre; // numeder serie
 		string numeroSerie;
+		string marca;		
+		string categoria; // periferico o componente
+		string tipo; // mause, teclado, procesador		
+		string precio;
 
 		productos();
 
-		void crear_objetos(string _nombre, string _marca, string _tipo, string _precios, string _numeroserie);
+		void crear_objetos(string _nombre, string _marca,string categoria , string _tipo, string _precios, string _numeroserie);
 };
 
 

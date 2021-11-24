@@ -2,7 +2,7 @@
 #include "usuario.h"
 #include "cliente.h"
 #include "productos.h"
-#include"arrays_objetos.h"
+
 #include <string>
 #include <iostream>
 
@@ -67,11 +67,82 @@ bool verifica_numero(string numero) {
 }
 
 
+void arreaglo_de_objetos(productos *&producto,ifstream &inventario)
+{
+    int m = 0;
+
+    string numeroSerie;
+    string nombre;
+    string marca;
+    string tipo;
+    string precio;
+
+    inventario.open("inventario.txt", ios::in);
+
+    if (inventario.is_open())
+    {
+        inventario >> numeroSerie;
+ 
+        while (!inventario.eof())
+        {
+            inventario >> nombre;
+            nombre = separa(nombre);
+            inventario >> marca;
+            marca = separa(marca);
+            inventario >> tipo;
+            tipo = separa(tipo);
+            inventario >> precio;
+            producto[m].crear_objetos(nombre, marca, tipo, precio, numeroSerie);
+            m= m + 1;
+            inventario >> numeroSerie;
+        }
+        inventario.close();
+    }
+}
+
+
+void areglos_de_usuarios(cliente *& cliente_1,ifstream & inventario){
+
+    string nombre, documentoIdentidad,correo,contrasena,id,direccion,telefono,tipo_usuario;
+    int n = 0;
+    inventario.open("usuario.txt", ios::in);
+    
+    if (inventario.is_open())
+    {
+        inventario >> nombre;
+
+        while (!inventario.eof())
+        {
+            inventario >> documentoIdentidad;
+            inventario >> correo,
+            inventario >> contrasena;
+            inventario >> id;
+            inventario >> direccion;
+            inventario >> telefono;
+            inventario >> tipo_usuario;
+            if (tipo_usuario=="CLIENTE") {
+                cliente_1[n].setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
+                cliente_1[n].setCliente(tipo_usuario);
+                n = n + 1;
+            }
+            
+            inventario >>nombre ;
+        }
+        inventario.close();
+    }
+    else
+    {
+        cout << "ERROR" << endl;
+        system("pause");
+    }
+}
+
+
 int contdor_productos(ifstream &inventario)
 {
 
     int n = 0;
-    string numeroSerie,nombre,marca,tipo,categoria, precio;
+    string numeroSerie,nombre,marca,tipo,precio;
 
     inventario.open("inventario.txt", ios::in);
     if (inventario.is_open())
@@ -83,7 +154,6 @@ int contdor_productos(ifstream &inventario)
             inventario >> nombre;
             inventario >> marca;
             inventario >> tipo;
-            inventario >> categoria;
             inventario >> precio;
             n = n + 1;
             inventario >> numeroSerie;
@@ -160,7 +230,7 @@ int menuAdministrador()
 }
 
 
-void adminMetodos(productos*& producto , cliente*& cliente1, administrador admin,arrays_objetos &productos1  , int tamano_users)
+void adminMetodos(productos*& producto , cliente*& cliente1, administrador admin, ifstream& Lec, ofstream& EXP, int tamano_users)
 {
     int opcionAdmin = 0;
     int n;
@@ -171,25 +241,26 @@ void adminMetodos(productos*& producto , cliente*& cliente1, administrador admin
         switch (opcionAdmin)
         {
         case 1:
-            admin.agregar_producto(productos1);
-            
+            admin.agregar_producto(EXP);
+            n = contdor_productos(Lec);
+            modificar_arrays(producto,n,Lec);
             break;
         case 2:
-            admin.ver_productos(productos1);
+            admin.ver_productos(Lec);
             break;
         case 3:
-            /*admin.modificar_inventario(Lec);
+            admin.modificar_inventario(Lec);
             n = contdor_productos(Lec);
-            modificar_arrays(producto, n, Lec);*/
+            modificar_arrays(producto, n, Lec);
             break;
         case 4:
-            /*admin.eliminar_inventario(Lec);
+            admin.eliminar_inventario(Lec);
             n = contdor_productos(Lec);
-            modificar_arrays(producto, n, Lec);*/
+            modificar_arrays(producto, n, Lec);
                 break;
         case 5:
             //Ver clientes
-            //areglos_de_usuarios(cliente1, Lec);
+            areglos_de_usuarios(cliente1, Lec);
             imprime_user_objeto(cliente1, tamano_users);
             break;
         case 6:
@@ -256,7 +327,7 @@ void clienteMetodos(cliente clienteM, productos *& producto , ifstream& Lec, ofs
 void modificar_arrays(productos*& producto, int nuevo_tamaño, ifstream& inventario) {
     delete[] producto;
     producto = new productos[nuevo_tamaño];
-    //arreaglo_de_objetos(producto, inventario);
+    arreaglo_de_objetos(producto, inventario);
 }
 
 
