@@ -141,18 +141,22 @@
   <ItemGroup>
     <ClCompile Include="administrador.cpp" />
     <ClCompile Include="arrays_objetos.cpp" />
+    <ClCompile Include="carrito_compras.cpp" />
     <ClCompile Include="cliente.cpp" />
     <ClCompile Include="librerias.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="productos.cpp" />
+    <ClCompile Include="tarjeta_visa.cpp" />
     <ClCompile Include="usuario.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="administrador.h" />
     <ClInclude Include="arrays_objetos.h" />
+    <ClInclude Include="carrito_compras.h" />
     <ClInclude Include="cliente.h" />
     <ClInclude Include="librerias.h" />
     <ClInclude Include="productos.h" />
+    <ClInclude Include="tarjeta_visa.h" />
     <ClInclude Include="usuario.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

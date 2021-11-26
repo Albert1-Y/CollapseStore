@@ -3,7 +3,7 @@
 #include "librerias.h"
 #include "cliente.h"
 #include "arrays_objetos.h"
-#include "adminitrador.h"
+#include "administrador.h"
 
 #include <iostream>
 #include <string>
@@ -61,7 +61,7 @@ int main()
             //crea_cuenta_cliente( EXP);
             break;
         case 3: //Buscar producto
-            cliente_unico.ver_productos(registro_productos, Lec);
+            admin.ver_productos(productos1) ;
             break;
 
         case 4: //Modificar producto

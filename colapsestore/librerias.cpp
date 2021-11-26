@@ -72,7 +72,7 @@ int contdor_productos(ifstream &inventario)
 {
 
     int n = 0;
-    string numeroSerie,nombre,marca,tipo,categoria, precio;
+    string numeroSerie,nombre,marca,tipo,categoria, precio,cantidad;
 
     inventario.open("inventario.txt", ios::in);
     if (inventario.is_open())
@@ -86,6 +86,7 @@ int contdor_productos(ifstream &inventario)
             inventario >> tipo;
             inventario >> categoria;
             inventario >> precio;
+            inventario >> cantidad;
             n = n + 1;
             inventario >> numeroSerie;
         }

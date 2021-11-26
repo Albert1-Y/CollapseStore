@@ -12,7 +12,7 @@ public:
 	void setadmin(string);
 	void agregar_producto(arrays_objetos& arrays_producto);
 	void ver_productos(arrays_objetos& arrays_producto);
-	/*void modificar_inventario(arrays_objetos& arrays_producto);
-	void eliminar_inventario(arrays_objetos& arrays_producto);*/
+	void ingreando_elementos_repetidos(arrays_objetos& arrays_producto);
+	void eliminar_inventario(arrays_objetos& arrays_producto);
 };
 

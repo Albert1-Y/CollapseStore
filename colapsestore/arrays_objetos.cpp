@@ -8,12 +8,14 @@ arrays_objetos::arrays_objetos() {
     arrays_productos=nullptr;
     arrays_cliente=nullptr;
 }
-arrays_objetos::~arrays_objetos() {
+arrays_objetos::~arrays_objetos()
+{
     delete[] arrays_cliente;
     delete[] arrays_productos;
 }
 
-void arrays_objetos::set_crea_arrays_productos(ifstream & inventario) {
+void arrays_objetos::set_crea_arrays_productos(ifstream & inventario)
+{
     tamano_producto = contdor_productos(inventario);
     arrays_productos = new productos[tamano_producto];
 }
@@ -33,12 +35,12 @@ void arrays_objetos::setarrays_objetos(ifstream & inventario ){
     string marca;
     string tipo;
     string precio;
-    string categoria;
+    string categoria, cantidad; 
 
     inventario.open("inventario.txt", ios::in);
 
-    if (inventario.is_open())
-    {
+    
+    
         inventario >> numeroSerie;
 
         while (!inventario.eof())
@@ -51,16 +53,20 @@ void arrays_objetos::setarrays_objetos(ifstream & inventario ){
             categoria = separa(categoria);
             inventario >> tipo;
             tipo = separa(tipo);
+            inventario >> tipo;
+            tipo = separa(tipo);
             
             inventario >> precio;
             precio = separa(precio);
-            arrays_productos[m].crear_objetos(nombre, marca, categoria,tipo,precio, numeroSerie);
+            inventario >> cantidad;
+            cantidad = separa(cantidad);
+            arrays_productos[m].crear_objetos(nombre, marca, categoria,tipo,precio, numeroSerie,cantidad);
             m = m + 1;
             inventario >> numeroSerie;
         }
         inventario.close();
     }
-}
+
 
 
 void arrays_objetos::setarrays_usuario(ifstream& inventario) {
@@ -76,7 +82,7 @@ void arrays_objetos::setarrays_usuario(ifstream& inventario) {
         {
             inventario >> documentoIdentidad;
             inventario >> correo,
-                inventario >> contrasena;
+            inventario >> contrasena;
             inventario >> id;
             inventario >> direccion;
             inventario >> telefono;

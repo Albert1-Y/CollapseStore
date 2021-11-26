@@ -3,6 +3,7 @@
 #include <fstream>
 #include <Windows.h>
 #include <cstdlib>
+
 #include "cliente.h"
 #include "librerias.h"
 #include "usuario.h"
@@ -48,14 +49,3 @@ void cliente::ver_productos(productos*& producto, ifstream& inventario)
 }
 
 
-carritoCompra::carritoCompra() {
-    ID = "";
-    saldo = "";
-}
-
-
-void carritoCompra::setcarritoCompra(string _ID, string _saldo)
-{
-    ID = _ID;
-    saldo = _saldo;
-}
