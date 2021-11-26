@@ -23,6 +23,9 @@ int main()
     cliente * registro_usuario = new cliente[tamano_usuario];
     cliente cliente_unico;
     administrador admin;
+
+    tarjeta_visa tarjeta1;
+
     //cout << tamano_usuario;
 
     

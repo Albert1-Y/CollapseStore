@@ -2,6 +2,7 @@
 #include"productos.h"
 #include"cliente.h"
 #include<fstream>
+#include"productos.h"
 //#include"usuario.h"
 
 class arrays_objetos

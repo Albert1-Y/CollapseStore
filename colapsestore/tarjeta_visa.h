@@ -13,7 +13,7 @@ class tarjeta_visa
 		string CVV;
 
 		tarjeta_visa();
-		void set_tarjeta_visa(double _saldo, string _numeroTarjeta, string _fechaVencimiento, string _CVV);
-		//void descontar(double totalCompra);
+		void set_tarjeta_visa(string _numeroTarjeta, string _fechaVencimiento, string _CVV, double _saldo);
+		void descontar(double _totalCompra);
 };
 

@@ -3,6 +3,8 @@
 #include"usuario.h"
 #include <string>
 #include "administrador.h"
+#include "tarjeta_visa.h"
+#include"arrays_objetos.h"
 
 string nosepara(string dato);
 string separa(string dato);
@@ -14,6 +16,8 @@ int contdor_productos(ifstream& inventario);
 
 
 int contador_usuario(ifstream& inventario);
+
+bool verifica_tarjeta(tarjeta_visa tarjeta_1);
 
 
 int menu();

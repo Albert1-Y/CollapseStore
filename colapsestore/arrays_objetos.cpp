@@ -2,7 +2,8 @@
 #include "librerias.h"
 
 
-arrays_objetos::arrays_objetos() {
+arrays_objetos::arrays_objetos()
+{
     tamano_producto = 0;
     tamano_cliente = 0;
     arrays_productos=nullptr;

@@ -1,11 +1,8 @@
 #include "librerias.h"
-#include "usuario.h"
-#include "cliente.h"
-#include "productos.h"
-
-#include"arrays_objetos.h"
+#include <sstream> //convertir cadenas a float
 #include <string>
 #include <iostream>
+
 
 
 string nosepara(string dato)
@@ -134,7 +131,7 @@ int menu()
     cout << "----------Bienvenido a Collapse Store-------------" << endl;
     cout << "--------------For Gamers by Gamers----------------" << endl;
     cout << "-----------------Oficial Retail-------------------" << endl;
-    cout << "1. Iniciar secion" << endl;
+    cout << "1. Iniciar sesion" << endl;
     cout << "2. Crear cuenta" << endl;
     cout << "3. Ingresar como invitado" << endl;
     cout << "4. Salir" << endl;
@@ -330,9 +327,9 @@ void inciar_sesion(ifstream& inventario,cliente &cliente_1,administrador & admin
                 cout<<"lograste entrar como cliente\n";
                 
                 cliente_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
-                cliente_1.setCliente(tipo_usuario);
-                system("pause");
+                cliente_1.setCliente(tipo_usuario);                
                 inventario.close();
+                system("pause");
                 return;
                 
             }
@@ -368,3 +365,61 @@ void imprime_user_objeto(cliente *& cliente_1,int tamano)
     system("pause");
 }
 
+
+bool verifica_tarjeta(tarjeta_visa tarjeta_1){
+    ifstream tarjeta_cuentas;
+    double _saldo; 
+    string _numeroTarjeta, _fechaVencimiento, _CVV;
+    string auxfechaVencimiento,auxCVV, auxnumeroTarjeta;
+
+    tarjeta_cuentas.open("tarjeta_cuentas.txt", ios::in);
+    if (tarjeta_cuentas.is_open()){
+        cout << "---- TARJETA DE CREDITO-----\n\n";
+        cout << "Ingrese el numero de su tarjeta: ";
+        cout << "MODELO: 2949596079605124";
+        cin.ignore();
+        getline(cin, auxnumeroTarjeta);
+
+        cout << "Ingrese la fecha de vencimiento de su tarjeta: ";
+        cout << "MODELO: 03/04/2022";
+        getline(cin, auxfechaVencimiento);
+
+        cout << "Ingrese el codigo CVV de 3 digitos de su tarjeta: ";
+        getline(cin, auxCVV);
+
+        while (true) {
+            bool verifica;
+            cout << "Ingrese el codigo CVV de 3 digitos de su tarjeta: ";
+            getline(cin, _CVV);
+            verifica = verifica_numero(_CVV);
+            if (verifica)
+                break;
+        }
+        
+        tarjeta_cuentas >>_numeroTarjeta;
+        while (!tarjeta_cuentas.eof())
+        {
+            tarjeta_cuentas >> _fechaVencimiento;
+            tarjeta_cuentas >> _CVV;
+            tarjeta_cuentas >> _saldo;
+            
+            if (_numeroTarjeta==auxnumeroTarjeta && auxfechaVencimiento == _fechaVencimiento && auxCVV == _CVV){
+                cout<<"Datos comprobados de tarjeta\n";
+                
+                tarjeta_1.set_tarjeta_visa(_numeroTarjeta, _fechaVencimiento, _CVV, _saldo);
+                tarjeta_cuentas.close();
+                system("pause");
+                return true;                
+            }   
+            tarjeta_cuentas >> _numeroTarjeta;
+        }
+        tarjeta_cuentas.close();
+    }
+    else
+    {
+        cout << "ERROR\n";
+    }
+    cout << "\n***DATOS INCORRECTOS DE TARJETA***";
+    system("pause");
+    return false;
+}

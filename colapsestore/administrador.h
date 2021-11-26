@@ -14,5 +14,6 @@ public:
 	void ver_productos(arrays_objetos& arrays_producto);
 	void ingreando_elementos_repetidos(arrays_objetos& arrays_producto);
 	void eliminar_inventario(arrays_objetos& arrays_producto);
+	void elimina_unidadees_producto(arrays_objetos& arrays_producto);
 };
 
