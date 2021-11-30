@@ -16,6 +16,6 @@ void tarjeta_visa::set_tarjeta_visa(string _numeroTarjeta, string _fechaVencimie
 }
 
 
-void tarjeta_visa::descontar(double _totalCompra){
+/*void tarjeta_visa::descontar(double _totalCompra) {
 
-}
+*/

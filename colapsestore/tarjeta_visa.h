@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-
 using namespace std;
 
 class tarjeta_visa
@@ -14,6 +13,6 @@ class tarjeta_visa
 
 		tarjeta_visa();
 		void set_tarjeta_visa(string _numeroTarjeta, string _fechaVencimiento, string _CVV, double _saldo);
-		void descontar(double _totalCompra);
+		//void descontar(double _totalCompra);
 };
 

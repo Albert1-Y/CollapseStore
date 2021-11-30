@@ -1,89 +1,71 @@
 #include "productos.h"
 #include "usuario.h"
 #include "librerias.h"
-#include "cliente.h"
+//#include "cliente.h"
 #include "arrays_objetos.h"
 #include "administrador.h"
-
+//#include "carrito_compras.h"
+//#include "tarjeta_visa.h"
 #include <iostream>
 #include <string>
 #include <fstream>
-
+#include<cstdlib>
+using namespace std;
 int main()
-{   
+{   double inig;
     ofstream EXP;
 	ifstream Lec;
     arrays_objetos productos1;
+
     productos1.set_crea_arrays_productos(Lec);
     productos1.setarrays_objetos(Lec);
-   
+    carrito_compras carrito1;
 	int tamano_producto = contdor_productos(Lec);
     int tamano_usuario = contador_usuario(Lec);
-	productos *registro_productos= new productos[tamano_producto];
-    cliente * registro_usuario = new cliente[tamano_usuario];
     cliente cliente_unico;
     administrador admin;
-
     tarjeta_visa tarjeta1;
-
-    //cout << tamano_usuario;
-
-    
-    /*admin.setUsuario("NombrePepito", "DNI7030", "pepito@gmail.com", "contra123456781", "ID1234", "Arequipa", "telefono123545");*/
-    //arreaglo_de_objetos(registro_productos,Lec);
-
-    
     int m = 0;
 	int opcion = 0;
+   
     do
     {
         opcion = menu();
         switch (opcion)
         {
-        case 1: //Registrar producto
+        case 1: 
             inciar_sesion(Lec,cliente_unico,admin);
-            cout << admin.codigoAministrador;
-            system("pause");
-
-            if (cliente_unico.codigocliente == "CLIENTE")
+           
+            
+            if (cliente_unico.codigocliente == "CLIENTE")  
             {
-                clienteMetodos(cliente_unico, registro_productos, Lec, EXP);
+                carrito1.setcarritoCompra(cliente_unico.ID, cliente_unico.direccion);
+                carrito1.productos_carritod(Lec, productos1);
+                
+                clienteMetodos(cliente_unico, productos1, Lec, EXP,carrito1,tarjeta1);
+                cliente_unico.codigocliente = "";
+                
             }
             else if (admin.codigoAministrador == "ADMINISTRADOR")
             {
-                adminMetodos(registro_productos,registro_usuario,admin,productos1,tamano_usuario);
+                adminMetodos(productos1,admin,productos1,tamano_usuario);
+                admin.codigoAministrador = "";
             }
-            //admin.agregar_producto(EXP);
-            //n = contdor_productos(Lec);
-            //modificar_arrays(registro_productos,n,Lec);
 
-            
             break;
-        case 2: //
-            crea_cuenta_cliente(EXP);
-            //crea_cuenta_cliente( EXP);
+        case 2:
             break;
-        case 3: //Buscar producto
-            admin.ver_productos(productos1) ;
+        case 3:
             break;
-
-        case 4: //Modificar producto
-            //admin.modificar_inventario(Lec);
-            //n = contdor_productos(Lec);
-            //modificar_arrays(registro_productos, n, Lec);
-            
-            //cout<<"\n"<<productos1.arrays_productos->nombre<<"\n";
-            cout << "\n" << productos1.arrays_productos[3].nombre << "\n";
-  
-  
+        case 4:
             system("pause");
+            for (int i = 0; i<productos1.tamano_producto; i++) {
+                cout << "\n";
+                cout << productos1.arrays_productos[i].precio;}
             break;
-         case 5: //Eliminar producto
-            //admin.eliminar_inventario(Lec);
-            //n = contdor_productos(Lec);
-            //modificar_arrays(registro_productos, n, Lec);
+         case 5: 
             
-             break;
+            break;
         default:
             cout << "Por favor seleccione una opción valida";
             break;

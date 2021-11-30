@@ -1,8 +1,6 @@
 #include "administrador.h"
+#include  "productos.h"
 #include "librerias.h"
-#include<iostream>
-#include<string>
-#include<cstdlib>
 using namespace std;
 
 administrador::administrador()
@@ -28,7 +26,7 @@ void administrador::agregar_producto(arrays_objetos& arrays_producto)
     }
     //limpiamos nuestro array original creamos nuestro arrays mas 1 lemento 
     delete[] arrays_producto.arrays_productos;
-    arrays_producto.arrays_productos = new productos[arrays_producto.tamano_producto++];
+    arrays_producto.arrays_productos = new productos[(arrays_producto.tamano_producto)+1];
 
     //colocamos los productos dea nuestra array auxiliar a nuestro nuevo array de productos
     for (int i = 0; i < arrays_producto.tamano_producto; i++) {
@@ -66,7 +64,7 @@ void administrador::agregar_producto(arrays_objetos& arrays_producto)
     }
     arrays_producto.arrays_productos[arrays_producto.tamano_producto].crear_objetos(_nombre, _marca, _categoria, _tipo, _precios, _numeroserie,_cantidad);
     delete[] auxiarrays_productos;
-    arrays_producto.tamano_producto++;
+    arrays_producto.tamano_producto= arrays_producto.tamano_producto+1;
 
 }
 
@@ -102,7 +100,7 @@ void administrador::ingreando_elementos_repetidos(arrays_objetos& arrays_product
             
             return;
         }
-        else if (i == arrays_producto.tamano_producto--) {
+        else if (i == (arrays_producto.tamano_producto)-1) {
             cout << "\n¡El producto no fue encontrado!\n";
             
         }
@@ -115,6 +113,7 @@ void administrador::eliminar_inventario(arrays_objetos& arrays_producto){
     cout << "TEN EN CUENTA QUE ELIMINARAS EL PRODUCTO POR COMPPLETO\n";
     string n_serie;
     cout << "Ingrese en numero de serie del producto: ";
+    cin.ignore();
     getline(cin, n_serie);
     for (int i = 0; i < arrays_producto.tamano_producto; i++) {
         if (n_serie == arrays_producto.arrays_productos[i].numeroSerie) {
@@ -122,31 +121,31 @@ void administrador::eliminar_inventario(arrays_objetos& arrays_producto){
             cout << "Si se encontro el producto se procedera a elminar de la base de datos\n";
             
             productos* auxiarrays_productos;
-            auxiarrays_productos = new productos[arrays_producto.tamano_producto--];
+            auxiarrays_productos = new productos[(arrays_producto.tamano_producto)-1];
             int j = 0;
-            for (int i = 0; i < arrays_producto.tamano_producto; i++) {
-                if (n_serie == arrays_producto.arrays_productos[i].numeroSerie) {
+            for (int h = 0; h < (arrays_producto.tamano_producto); h++) {
+                if (n_serie == arrays_producto.arrays_productos[h].numeroSerie) {
                     continue;
                 }
                    
                 else {
-                    auxiarrays_productos[j] = arrays_producto.arrays_productos[i];
+                    auxiarrays_productos[j] = arrays_producto.arrays_productos[h];
                     j++;
                 }
 
             }
             delete[] arrays_producto.arrays_productos;
-            arrays_producto.arrays_productos = new productos[arrays_producto.tamano_producto--];
+            arrays_producto.arrays_productos = new productos[(arrays_producto.tamano_producto)-1];
             
-            for (int i = 0; i < arrays_producto.tamano_producto--; i++) {
-                arrays_producto.arrays_productos[i] = auxiarrays_productos[i];
+            for (int m = 0; m< (arrays_producto.tamano_producto)-1; m++) {
+                arrays_producto.arrays_productos[m] = auxiarrays_productos[m];
 
             }
             delete[] auxiarrays_productos;
-            arrays_producto.tamano_producto--;
+            arrays_producto.tamano_producto= arrays_producto.tamano_producto -1;
             return;
         }
-        else if (i == arrays_producto.tamano_producto--)
+        else if (i == arrays_producto.tamano_producto-1)
         {
             cout << "\n¡El producto no fue encontrado!\n";
         }

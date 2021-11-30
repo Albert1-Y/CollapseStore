@@ -1,6 +1,7 @@
 #pragma once
 #include "usuario.h"
 #include"arrays_objetos.h"
+using namespace std;
 
 class administrador :public usuario
 {

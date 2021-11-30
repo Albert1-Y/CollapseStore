@@ -1,9 +1,10 @@
-#include "librerias.h"
-#include <sstream> //convertir cadenas a float
+#include"librerias.h"
+#include <fstream> //convertir cadenas a float
 #include <string>
 #include <iostream>
+#include<cstdlib>
 
-
+using namespace std;
 
 string nosepara(string dato)
 {
@@ -159,10 +160,10 @@ int menuAdministrador()
 }
 
 
-void adminMetodos(productos*& producto , cliente*& cliente1, administrador admin,arrays_objetos &productos1  , int tamano_users)
+void adminMetodos(arrays_objetos & producto , administrador admin,arrays_objetos &productos1  , int tamano_users)
 {
     int opcionAdmin = 0;
-    int n;
+    //int n;
     do
     {
         opcionAdmin = menuAdministrador();
@@ -174,9 +175,11 @@ void adminMetodos(productos*& producto , cliente*& cliente1, administrador admin
             
             break;
         case 2:
+            
             admin.ver_productos(productos1);
             break;
         case 3:
+            admin.eliminar_inventario(productos1);
             /*admin.modificar_inventario(Lec);
             n = contdor_productos(Lec);
             modificar_arrays(producto, n, Lec);*/
@@ -189,7 +192,7 @@ void adminMetodos(productos*& producto , cliente*& cliente1, administrador admin
         case 5:
             //Ver clientes
             //areglos_de_usuarios(cliente1, Lec);
-            imprime_user_objeto(cliente1, tamano_users);
+            //imprime_user_objeto(cliente1, tamano_users);
             break;
         case 6:
             //Buscar clientes
@@ -226,7 +229,7 @@ int menuCliente()
 }
 
 
-void clienteMetodos(cliente clienteM, productos *& producto , ifstream& Lec, ofstream& EXP)
+void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, ofstream& EXP,carrito_compras &carrito1,tarjeta_visa tarjeta_1)
 {   
     
     int opcionAdmin = 0;
@@ -237,11 +240,14 @@ void clienteMetodos(cliente clienteM, productos *& producto , ifstream& Lec, ofs
         switch (opcionAdmin)
         {
         case 1: 
-            clienteM.ver_productos(producto, Lec);
+            
+            clienteM.ver_productos(producto1,carrito1);
             break;
         case 2: 
             break;
         case 3: 
+            carrito1.verProductos();
+            hacer_pago(tarjeta_1, carrito1);
             break;
         default:
             cout << "Por favor seleccione una opción valida";
@@ -252,11 +258,6 @@ void clienteMetodos(cliente clienteM, productos *& producto , ifstream& Lec, ofs
 }
 
 
-void modificar_arrays(productos*& producto, int nuevo_tamaño, ifstream& inventario) {
-    delete[] producto;
-    producto = new productos[nuevo_tamaño];
-    //arreaglo_de_objetos(producto, inventario);
-}
 
 
 void crea_cuenta_cliente(ofstream& inventario) {
@@ -324,7 +325,7 @@ void inciar_sesion(ifstream& inventario,cliente &cliente_1,administrador & admin
             inventario >> tipo_usuario;
             if (auxiID == id && auxcontrasena == contrasena && tipo_usuario == "CLIENTE")
             {
-                cout<<"lograste entrar como cliente\n";
+                cout<<"lograste entrar como cliente \n";
                 
                 cliente_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
                 cliente_1.setCliente(tipo_usuario);                
@@ -363,12 +364,13 @@ void imprime_user_objeto(cliente *& cliente_1,int tamano)
         cout << cliente_1[i].nombre << "\n";
     }
     system("pause");
+   
 }
 
 
-bool verifica_tarjeta(tarjeta_visa tarjeta_1){
+bool verifica_tarjeta(tarjeta_visa&tarjeta_1){
     ifstream tarjeta_cuentas;
-    double _saldo; 
+    string _saldo; 
     string _numeroTarjeta, _fechaVencimiento, _CVV;
     string auxfechaVencimiento,auxCVV, auxnumeroTarjeta;
 
@@ -376,25 +378,19 @@ bool verifica_tarjeta(tarjeta_visa tarjeta_1){
     if (tarjeta_cuentas.is_open()){
         cout << "---- TARJETA DE CREDITO-----\n\n";
         cout << "Ingrese el numero de su tarjeta: ";
-        cout << "MODELO: 2949596079605124";
+        cout << "MODELO: 2949596079605124: ";
         cin.ignore();
         getline(cin, auxnumeroTarjeta);
 
         cout << "Ingrese la fecha de vencimiento de su tarjeta: ";
-        cout << "MODELO: 03/04/2022";
+        cout << "MODELO: 03/04/2022: ";
         getline(cin, auxfechaVencimiento);
 
         cout << "Ingrese el codigo CVV de 3 digitos de su tarjeta: ";
         getline(cin, auxCVV);
 
-        while (true) {
-            bool verifica;
-            cout << "Ingrese el codigo CVV de 3 digitos de su tarjeta: ";
-            getline(cin, _CVV);
-            verifica = verifica_numero(_CVV);
-            if (verifica)
-                break;
-        }
+    
+           
         
         tarjeta_cuentas >>_numeroTarjeta;
         while (!tarjeta_cuentas.eof())
@@ -404,11 +400,12 @@ bool verifica_tarjeta(tarjeta_visa tarjeta_1){
             tarjeta_cuentas >> _saldo;
             
             if (_numeroTarjeta==auxnumeroTarjeta && auxfechaVencimiento == _fechaVencimiento && auxCVV == _CVV){
+                double com = stod(_saldo);
                 cout<<"Datos comprobados de tarjeta\n";
                 
-                tarjeta_1.set_tarjeta_visa(_numeroTarjeta, _fechaVencimiento, _CVV, _saldo);
+                tarjeta_1.set_tarjeta_visa(_numeroTarjeta, _fechaVencimiento, _CVV, com);
                 tarjeta_cuentas.close();
-                system("pause");
+  
                 return true;                
             }   
             tarjeta_cuentas >> _numeroTarjeta;
@@ -422,4 +419,23 @@ bool verifica_tarjeta(tarjeta_visa tarjeta_1){
     cout << "\n***DATOS INCORRECTOS DE TARJETA***";
     system("pause");
     return false;
+}
+void hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1) {
+    int opcion;
+    
+    cout << "1. ¿Desea comprar los productos? "<<"\n";
+    cout << "2.Quitar elemento" << "\n";
+    cout << "opcion: ";
+    cin >> opcion;
+    if (opcion == 1) {
+            
+            carrito1.cancelarCompra(tarjeta1);
+            
+        }
+        
+     else if (opcion == 2) {
+        //aun no listo
+        }
+     else
+        cout << "No existe esa opcion\n";
 }

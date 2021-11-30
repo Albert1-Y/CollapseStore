@@ -1,5 +1,4 @@
 #include "productos.h"
-#include <fstream>
 #include <Windows.h>
 
 
