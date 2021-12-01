@@ -5,6 +5,7 @@
 #include <iostream>
 //#include"cliente.h"
 using namespace std;
+
 class arrays_objetos
 {	
 	public:

@@ -3,7 +3,9 @@
 #include"administrador.h"
 #include "tarjeta_visa.h"
 #include "cliente.h"
+
 string nosepara(string dato);
+
 string separa(string dato);
 
 bool verifica_numero(string numero);
@@ -14,7 +16,7 @@ int contador_usuario(ifstream& inventario);
 
 bool verifica_tarjeta(tarjeta_visa &tarjeta_1);
 
-int menu();
+int menu_inicial();
 
 int menuAdministrador();
 
@@ -28,6 +30,6 @@ void crea_cuenta_cliente(/*cliente*& clase_cliente,*/ ofstream& inventario);
 
 void inciar_sesion(ifstream& inventario, cliente& cliente_1, administrador& administrador_1);
 
-
 void imprime_user_objeto(cliente*& cliente_1, int tamano);
+
 void hacer_pago(tarjeta_visa& tarjeta1, carrito_compras &carrito1);

@@ -16,6 +16,7 @@ class cliente :public usuario
 		cliente();
 		void setCliente(string);
 		void ver_productos(arrays_objetos& producto, carrito_compras& carrito);
+		void agregar_producto_carrito(arrays_objetos& producto, carrito_compras& carrito);
 
 	/*public:
 		void crea_cliente(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono, string _codigocliente);*/

@@ -125,7 +125,7 @@ int contador_usuario(ifstream &inventario)
 }
 
   
-int menu()
+int menu_inicial()
 {
     system("cls");
     int x;
@@ -260,7 +260,8 @@ void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, 
 
 
 
-void crea_cuenta_cliente(ofstream& inventario) {
+void crea_cuenta_cliente(ofstream& inventario)
+{
     string nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono, tipo_usuario;
     tipo_usuario = "CLIENTE";
     cout << "Digite su nombre completo: ";
@@ -290,9 +291,11 @@ void crea_cuenta_cliente(ofstream& inventario) {
 }
 
 
-void imprime_objeto(productos*& producto, int nuevo_tamaño) {
+void imprime_objeto(productos*& producto, int nuevo_tamaño)
+{
     system("cls");
-    for (int i = 0; i < nuevo_tamaño;i++) {
+    for (int i = 0; i < nuevo_tamaño;i++)
+    {
         cout<<"\n"<<producto[i].nombre;
     }
     cout << "\n";
@@ -420,22 +423,35 @@ bool verifica_tarjeta(tarjeta_visa&tarjeta_1){
     system("pause");
     return false;
 }
-void hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1) {
+
+void hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1)
+{
     int opcion;
     
     cout << "1. ¿Desea comprar los productos? "<<"\n";
-    cout << "2.Quitar elemento" << "\n";
+    cout << "2. Quitar elemento" << "\n";
     cout << "opcion: ";
     cin >> opcion;
-    if (opcion == 1) {
-            
-            carrito1.cancelarCompra(tarjeta1);
-            
-        }
+    if (opcion == 1)
+    {
+        carrito1.cancelarCompra(tarjeta1);     
+    }
         
-     else if (opcion == 2) {
-        //aun no listo
+    else if (opcion == 2)
+    {
+        carrito1.verProductos();
+        string elim;
+        cout << "¿Que producto desea eliminar de su carrito1? : " << "\n";
+        cin >> elim;
+        bool esNumero = verifica_numero(elim);
+        if (esNumero == true)
+        {
+            int numero = stoi(elim);
+            carrito1.eliminarProducto(numero);
         }
-     else
+    }
+    else
+    {
         cout << "No existe esa opcion\n";
+    }
 }

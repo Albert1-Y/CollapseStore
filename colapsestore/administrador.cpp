@@ -54,7 +54,8 @@ void administrador::agregar_producto(arrays_objetos& arrays_producto)
     cout << "Ingrese la cantidad del producto: ";
     getline(cin, _cantidad);
 
-    while (true) {
+    while (true)
+    {
         bool verifica;
         cout << "Ingrese el precio del producto: ";
         getline(cin, _precios);
@@ -87,7 +88,8 @@ void administrador::ver_productos(arrays_objetos& arrays_producto)
 
 //----------------------Adminstrador--------------------------------------
 
-void administrador::ingreando_elementos_repetidos(arrays_objetos& arrays_producto){
+void administrador::ingreando_elementos_repetidos(arrays_objetos& arrays_producto)
+{
     string busca_n_serie;
     cout << "Ingrese el numero de Serie: ";
     getline(cin, busca_n_serie);
@@ -101,10 +103,8 @@ void administrador::ingreando_elementos_repetidos(arrays_objetos& arrays_product
             return;
         }
         else if (i == (arrays_producto.tamano_producto)-1) {
-            cout << "\n¡El producto no fue encontrado!\n";
-            
+            cout << "\n¡El producto no fue encontrado!\n";            
         }
-
     }
     return;
 }
