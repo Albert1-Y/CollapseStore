@@ -18,7 +18,9 @@ class cliente :public usuario
 		
 	public: 
 		cliente();
+		
 		void setCliente(string);
+		
 		void ver_productos(arrays_objetos& producto);
 		void inicializarCarrito(arrays_objetos& producto);
 		void agregar_producto_carrito(arrays_objetos& producto);

@@ -16,8 +16,12 @@ carrito_compras::carrito_compras()
 
 carrito_compras::~carrito_compras()
 {
-    delete[] productos_carrito;
-}
+   
+   if (productos_carrito != nullptr) {
+        delete[] productos_carrito;
+        }
+    }
+
 
 void carrito_compras::setcarritoCompra(string _ID, string _direccion)
 {
@@ -183,25 +187,24 @@ void carrito_compras::verProductos()
     system("pause");
 }
 
-void carrito_compras::cancelarCompra(tarjeta_visa &tarjeta_1)
+void carrito_compras::cancelarCompra(tarjeta_visa& tarjeta_1)
 {
     if (contador_productos != 0)
     {
-        bool verifica = false;
-        verifica = verifica_tarjeta(tarjeta_1);
-        if (verifica) {
-            cout << "Tu saldo actual: " << tarjeta_1.saldo << "\n";
 
-            tarjeta_1.saldo = tarjeta_1.saldo - sumaTotal;
+        cout << "Tu saldo actual: " << tarjeta_1.saldo << "\n";
 
-            cout << "Tu saldo actual: " << tarjeta_1.saldo << "\n";
-            system("pause");
-        }
-        else
-        {
-            cout << "Tarjeta no encontrada";
-        }
+        tarjeta_1.saldo = tarjeta_1.saldo - sumaTotal;
+
+        cout << "Tu saldo actual: " << tarjeta_1.saldo << "\n";
+
+    }
+
+
+    else {
+        cout << "\nNo hya productos que comprar\n";
     }
 }
+
 
 

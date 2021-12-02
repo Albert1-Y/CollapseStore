@@ -88,7 +88,7 @@ void administrador::ver_productos(arrays_objetos& arrays_producto)
 
 //----------------------Adminstrador--------------------------------------
 
-void administrador::ingreando_elementos_repetidos(arrays_objetos& arrays_producto)
+void administrador::ingresando_elementos_repetidos(arrays_objetos& arrays_producto)
 {
     string busca_n_serie;
     cout << "Ingrese el numero de Serie: ";

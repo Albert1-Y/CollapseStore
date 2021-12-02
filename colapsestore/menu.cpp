@@ -22,16 +22,18 @@ void menu()
     productos1.setarrays_objetos(Lec);
     int tamano_producto = contdor_productos(Lec);
     int tamano_usuario = contador_usuario(Lec);
-    
     tarjeta_visa tarjeta1;
     int m = 0;
     int opcion = 0;
-
+    //cliente cliente_unico;
+    //administrador admin;
+    //cliente cliente_unico;
     do
     {
-        opcion = menu_inicial();
-        cliente cliente_unico;
         administrador admin;
+        cliente cliente_unico;
+        opcion = menu_inicial();
+       
         switch (opcion)
         {
         case 1:
@@ -42,29 +44,34 @@ void menu()
             if (cliente_unico.codigocliente == "CLIENTE")
             {
                 cliente_unico.inicializarCarrito(productos1);
-                cout << cliente_unico.carrito.ID;
-                system("pause");
+                
                 clienteMetodos(cliente_unico, productos1, Lec, EXP, tarjeta1);
+                
+               
+            
             }
             else if (admin.codigoAministrador == "ADMINISTRADOR")
             {
                 adminMetodos(productos1, admin, productos1, tamano_usuario);
-                
+                admin.~administrador();
             }
-
             break;
         case 2:
             crea_cuenta_cliente(cliente_unico);
             cliente_unico.inicializarCarrito(productos1);
             clienteMetodos(cliente_unico, productos1, Lec, EXP, tarjeta1);
+            
+      
             break;
         case 3:
-
             break;
         default:
-            cout << "Por favor seleccione una opción valida";
+            if (opcion !=4) {
+                cout << "\nPor favor seleccione una opción valida";
+            }
             break;
         }
-    } while (opcion != 4);
 
+    } while (opcion != 4);
+    actulizar_inventario(productos1);
 }

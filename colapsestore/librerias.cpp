@@ -135,18 +135,18 @@ int menuAdministrador()
     
     cout << "1. Agregar productos" << endl;
     cout << "2. Ver productos" << endl;
-    cout << "3. Modificar inventario" << endl;
-    cout << "4. Eliminar un producto" << endl;
-    cout << "5. Ver clientes" << endl;
-    cout << "6. Buscar clientes" << endl;
-    cout << "7. Ver historial de compra de una cliente" << endl;
-    cout << "8. Salir" << endl;
+    cout << "3. Ingresar elemento repetido " << endl;
+    cout << "4. Eliminar del inventario " << endl;
+    cout << "5. elimiminar unidades del producto" << endl;
+    //cout << "6. Buscar clientes" << endl;
+    //cout << "7. Ver historial de compra de una cliente" << endl;
+    cout << "6. Salir" << endl;
     cin >> x;
     return x;
 }
 
 
-void adminMetodos(arrays_objetos & producto , administrador admin,arrays_objetos &productos1  , int tamano_users)
+void adminMetodos(arrays_objetos & producto , administrador & admin,arrays_objetos &productos1  , int tamano_users)
 {
     int opcionAdmin = 0;
     //int n;
@@ -165,13 +165,13 @@ void adminMetodos(arrays_objetos & producto , administrador admin,arrays_objetos
             admin.ver_productos(productos1);
             break;
         case 3:
-            admin.eliminar_inventario(productos1);
+            admin.ingresando_elementos_repetidos(productos1);
             break;
         case 4:
-            //Eliminar un producto
+            admin.eliminar_inventario(productos1);
             break;
         case 5:
-            //Ver clientes
+            admin.elimina_unidadees_producto(productos1);
             break;
         case 6:
             //Buscar clientes
@@ -186,7 +186,7 @@ void adminMetodos(arrays_objetos & producto , administrador admin,arrays_objetos
 
 
     }
-    while (opcionAdmin != 8);
+    while (opcionAdmin != 6);
     
 }
 
@@ -208,15 +208,16 @@ int menuCliente()
 }
 
 
-void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, ofstream& EXP,tarjeta_visa tarjeta_1)
+void clienteMetodos(cliente &clienteM, arrays_objetos& producto1, ifstream& Lec, ofstream& EXP,tarjeta_visa &tarjeta_1)
 {   
     
     int opcionCliente = 0;
 
     do
-    {
+    {   
         opcionCliente = menuCliente();
         switch (opcionCliente)
+        
         {
             case 1: 
             
@@ -224,20 +225,25 @@ void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, 
                 system("pause");
                 break;
             case 2: 
-                // ver categorias
+                //ver categorias
                 break;
             case 3:
                 if (clienteM.carrito.contador_productos != 0)
                 {
                     clienteM.carrito.verProductos();
-                    hacer_pago(tarjeta_1, clienteM.carrito);
-                    clienteM.boleta();
+
+                    menu_hacer_pago(tarjeta_1, clienteM.carrito,clienteM);
+                    
+ 
                     system("pause");
                 }
                 break;
             default:
-                cout << "Por favor seleccione una opción valida";
-                system("pause");
+                
+                if (opcionCliente != 4) {
+                    cout << "\nPor favor seleccione una opción valida";
+                }
+                
                 break;
         }
     } while (opcionCliente != 4);
@@ -247,7 +253,7 @@ void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, 
 
 
 
-void crea_cuenta_cliente(cliente cliente_1)
+void crea_cuenta_cliente(cliente & cliente_1)
 {
     ofstream inventario;
 
@@ -359,8 +365,6 @@ bool verifica_tarjeta(tarjeta_visa&tarjeta_1){
         cout << "Ingrese el codigo CVV de 3 digitos de su tarjeta: ";
         getline(cin, auxCVV);
 
-    
-           
         
         tarjeta_cuentas >>_numeroTarjeta;
         while (!tarjeta_cuentas.eof())
@@ -391,21 +395,37 @@ bool verifica_tarjeta(tarjeta_visa&tarjeta_1){
     return false;
 }
 
-void hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1)
+void menu_hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1,cliente & cliente1)
 {
-    int opcion;
+    int opcions;
     
     cout << "1. Desea comprar los productos? "<<"\n";
     cout << "2. Quitar elementos" << "\n";
     cout << "opcion: ";
-    cin >> opcion;
-    if (opcion == 1)
+    cin >> opcions;
+    if (opcions == 1)
     {
-        carrito1.cancelarCompra(tarjeta1);     
+        bool verifica = false;
+        system("cls");
+        verifica = verifica_tarjeta(tarjeta1);
+        if (verifica) {
+            if (tarjeta1.saldo > carrito1.sumaTotal) {
+                system("cls");
+                carrito1.cancelarCompra(tarjeta1);
+                cliente1.boleta();
+
+            }
+            else {
+                cout << "\nNo cuenta con saldo suficiente\n";
+            }
+
+        }
+        else {
+            cout << "\nNo se encontro de tarjeta\n";
+        }
     }
-        
-    else if (opcion == 2)
-    {
+    else if (opcions == 2)
+    {   
         carrito1.verProductos();
         string elim;
         cout << "¿Que producto desea eliminar de su carrito? : " << "\n";
@@ -421,4 +441,15 @@ void hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1)
     {
         cout << "No existe esa opcion\n";
     }
+}
+void actulizar_inventario(arrays_objetos producto1) {
+    ofstream inventario;
+    inventario.open("auxi_inventario.txt", ios::out | ios::app);
+    inventario << producto1.tamano_producto << "\n";
+    for (int i = 0; i < producto1.tamano_producto; i++) {
+        inventario << nosepara(producto1.arrays_productos[i].numeroSerie) << " " << nosepara(producto1.arrays_productos[i].nombre) << " " << nosepara(producto1.arrays_productos[i].marca) << " " << nosepara(producto1.arrays_productos[i].categoria) << " " << nosepara(producto1.arrays_productos[i].tipo) << " " << producto1.arrays_productos[i].precio << " " << producto1.arrays_productos[i].cantidad << "\n";
+    }
+    inventario.close();
+    remove("inventario.txt");
+    rename("auxi_inventario.txt", "inventario.txt");
 }

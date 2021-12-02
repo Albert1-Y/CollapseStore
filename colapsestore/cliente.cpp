@@ -95,7 +95,7 @@ void cliente::boleta()
 
     for (int i = 0; i < carrito.contador_productos; i++)
     {
-        cout << " -" << "1" << carrito.productos_carrito[i].nombre << "------\t\t-------" << carrito.productos_carrito[i].precio << "-\n";
+        cout << " -" << "1. " << carrito.productos_carrito[i].nombre << "------\t\t-------" << carrito.productos_carrito[i].precio << "-\n";
     }
 
     cout << "--------------------------------------------------" << endl;

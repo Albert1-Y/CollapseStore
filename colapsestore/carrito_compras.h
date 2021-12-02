@@ -4,7 +4,7 @@
 #include <fstream>
 #include"tarjeta_visa.h"
 #include"arrays_objetos.h"
-//#include"librerias.h"
+
 using namespace std;
 
 class carrito_compras
