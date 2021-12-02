@@ -33,6 +33,18 @@ void cliente::ver_productos(arrays_objetos& producto)
         cout << producto.arrays_productos[i].nombre << " ";
         cout << "$. "<< producto.arrays_productos[i].precio << " \n";
     }
+
+    int opcion = 0;
+    cout << "Que producto quieres agregar a tu carroto de compras (si deseas salir ingrase 0): ";
+    cin >> opcion;
+
+    if (opcion != 0 && opcion <= producto.tamano_producto)
+    {
+        carrito.agregarProducto(producto.arrays_productos[opcion - 1]);
+        cout << "se ha agragado con exito" << endl;
+        system("pause");
+    }
+
 }
 
 void cliente::inicializarCarrito(arrays_objetos& producto)
@@ -87,7 +99,7 @@ void cliente::boleta()
     }
 
     cout << "--------------------------------------------------" << endl;
-    cout << "------------------------------Total---------------" << endl;
+    cout << "------------------------------Total------"<< carrito.sumaTotal << "---" << endl;
     cout << "-------------------Cancelado----------------------" << endl;
 
 }

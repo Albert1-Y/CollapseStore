@@ -20,7 +20,6 @@ void menu()
     arrays_objetos productos1;
     productos1.set_crea_arrays_productos(Lec);
     productos1.setarrays_objetos(Lec);
-    carrito_compras carrito1;
     int tamano_producto = contdor_productos(Lec);
     int tamano_usuario = contador_usuario(Lec);
     
@@ -46,8 +45,6 @@ void menu()
                 cout << cliente_unico.carrito.ID;
                 system("pause");
                 clienteMetodos(cliente_unico, productos1, Lec, EXP, tarjeta1);
-               
-
             }
             else if (admin.codigoAministrador == "ADMINISTRADOR")
             {
@@ -57,24 +54,17 @@ void menu()
 
             break;
         case 2:
+            crea_cuenta_cliente(cliente_unico);
+            cliente_unico.inicializarCarrito(productos1);
+            clienteMetodos(cliente_unico, productos1, Lec, EXP, tarjeta1);
             break;
         case 3:
-            break;
-        case 4:
-            cout << contdor_productos(Lec);
-            system("pause");
-            /*for (int i = 0; i < productos1.tamano_producto; i++) {
-                cout << "\n";
-                cout << productos1.arrays_productos[i].precio;
-            }*/
-            break;
-        case 5:
 
             break;
         default:
             cout << "Por favor seleccione una opción valida";
             break;
         }
-    } while (opcion != 5);
+    } while (opcion != 4);
 
 }

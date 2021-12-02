@@ -68,7 +68,7 @@ bool verifica_numero(string numero) {
 
 int contdor_productos(ifstream &inventario)
 {
-    int cantidad;
+    int cantidad = {};
 
     inventario.open("inventario.txt", ios::in);
     if (inventario.is_open())
@@ -166,19 +166,12 @@ void adminMetodos(arrays_objetos & producto , administrador admin,arrays_objetos
             break;
         case 3:
             admin.eliminar_inventario(productos1);
-            /*admin.modificar_inventario(Lec);
-            n = contdor_productos(Lec);
-            modificar_arrays(producto, n, Lec);*/
             break;
         case 4:
-            /*admin.eliminar_inventario(Lec);
-            n = contdor_productos(Lec);
-            modificar_arrays(producto, n, Lec);*/
-                break;
+            //Eliminar un producto
+            break;
         case 5:
             //Ver clientes
-            //areglos_de_usuarios(cliente1, Lec);
-            //imprime_user_objeto(cliente1, tamano_users);
             break;
         case 6:
             //Buscar clientes
@@ -218,39 +211,46 @@ int menuCliente()
 void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, ofstream& EXP,tarjeta_visa tarjeta_1)
 {   
     
-    int opcionAdmin = 0;
+    int opcionCliente = 0;
 
     do
     {
-        opcionAdmin = menuCliente();
-        switch (opcionAdmin)
+        opcionCliente = menuCliente();
+        switch (opcionCliente)
         {
-        case 1: 
+            case 1: 
             
-            clienteM.ver_productos(producto1);
-            system("pause");
-            break;
-        case 2: 
-            break;
-        case 3:            
-            clienteM.carrito.verProductos();
-            hacer_pago(tarjeta_1, clienteM.carrito);
-            clienteM.boleta();
-            system("pause"); // por probarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-            break; 
-        default:
-            cout << "Por favor seleccione una opción valida";
-            break;
+                clienteM.ver_productos(producto1);
+                system("pause");
+                break;
+            case 2: 
+                // ver categorias
+                break;
+            case 3:
+                if (clienteM.carrito.contador_productos != 0)
+                {
+                    clienteM.carrito.verProductos();
+                    hacer_pago(tarjeta_1, clienteM.carrito);
+                    clienteM.boleta();
+                    system("pause");
+                }
+                break;
+            default:
+                cout << "Por favor seleccione una opción valida";
+                system("pause");
+                break;
         }
-    } while (opcionAdmin != 4);
+    } while (opcionCliente != 4);
 
 }
 
 
 
 
-void crea_cuenta_cliente(ofstream& inventario)
+void crea_cuenta_cliente(cliente cliente_1)
 {
+    ofstream inventario;
+
     string nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono, tipo_usuario;
     tipo_usuario = "CLIENTE";
     cout << "Digite su nombre completo: ";
@@ -269,7 +269,8 @@ void crea_cuenta_cliente(ofstream& inventario)
     cout << "Digite una contraseña: ";
     getline(cin, contrasena);
 
-    //cliente_1(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono, tipo_usuario);
+    cliente_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
+    cliente_1.setCliente(tipo_usuario);
 
     inventario.open("usuario.txt", ios::out | ios::app);
 
@@ -277,18 +278,6 @@ void crea_cuenta_cliente(ofstream& inventario)
     // cout<<clase_cliente[0].nombre;
     inventario.close();
 
-}
-
-
-void imprime_objeto(productos*& producto, int nuevo_tamaño)
-{
-    system("cls");
-    for (int i = 0; i < nuevo_tamaño;i++)
-    {
-        cout<<"\n"<<producto[i].nombre;
-    }
-    cout << "\n";
-    system("pause");
 }
 
 
@@ -347,17 +336,6 @@ void inciar_sesion(ifstream& inventario,cliente &cliente_1,administrador & admin
     }
     cout << "\n***DATO INCORRECTO***";
     system("pause");
-}
-
-
-void imprime_user_objeto(cliente *& cliente_1,int tamano)
-{
-    system("cls");
-    for(int i=0;i<tamano;i++){
-        cout << cliente_1[i].nombre << "\n";
-    }
-    system("pause");
-   
 }
 
 

@@ -26,10 +26,8 @@ int menuCliente();
 
 void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, ofstream& EXP, tarjeta_visa tarjeta_1);
 
-void crea_cuenta_cliente(/*cliente*& clase_cliente,*/ ofstream& inventario);
+void crea_cuenta_cliente(cliente cliente_1);
 
 void inciar_sesion(ifstream& inventario, cliente& cliente_1, administrador& administrador_1);
-
-void imprime_user_objeto(cliente*& cliente_1, int tamano);
 
 void hacer_pago(tarjeta_visa& tarjeta1, carrito_compras &carrito1);

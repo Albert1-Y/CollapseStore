@@ -185,19 +185,22 @@ void carrito_compras::verProductos()
 
 void carrito_compras::cancelarCompra(tarjeta_visa &tarjeta_1)
 {
-    bool verifica = false;
-    verifica = verifica_tarjeta(tarjeta_1);
-    if (verifica) {
-        cout << "Tu saldo actual: "<<tarjeta_1.saldo<<"\n";
-
-        tarjeta_1.saldo = tarjeta_1.saldo - sumaTotal;
-
-        cout << "Tu saldo actual: " << tarjeta_1.saldo << "\n";
-        system("pause");
-    }
-    else
+    if (contador_productos != 0)
     {
-        cout << "Tarjeta no encontrada";
+        bool verifica = false;
+        verifica = verifica_tarjeta(tarjeta_1);
+        if (verifica) {
+            cout << "Tu saldo actual: " << tarjeta_1.saldo << "\n";
+
+            tarjeta_1.saldo = tarjeta_1.saldo - sumaTotal;
+
+            cout << "Tu saldo actual: " << tarjeta_1.saldo << "\n";
+            system("pause");
+        }
+        else
+        {
+            cout << "Tarjeta no encontrada";
+        }
     }
 }
 
