@@ -3,25 +3,27 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+
 #include "usuario.h"
-#include"carrito_compras.h"
+#include "carrito_compras.h"
+
 using namespace std;
 
 class cliente :public usuario
 {
 	public:
 		string codigocliente;
+		carrito_compras carrito;
+
 		
 	public: 
 		cliente();
 		void setCliente(string);
-		void ver_productos(arrays_objetos& producto, carrito_compras& carrito);
-		void agregar_producto_carrito(arrays_objetos& producto, carrito_compras& carrito);
+		void ver_productos(arrays_objetos& producto);
+		void inicializarCarrito(arrays_objetos& producto);
+		void agregar_producto_carrito(arrays_objetos& producto);
+		void boleta();
 
-	/*public:
-		void crea_cliente(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono, string _codigocliente);*/
-		 
-		//void historialCompra(ifstream& historial);1
-	// void carritoCompra(ofstream& historial);
+
 };
 

@@ -68,29 +68,15 @@ bool verifica_numero(string numero) {
 
 int contdor_productos(ifstream &inventario)
 {
-
-    int n = 0;
-    string numeroSerie,nombre,marca,tipo,categoria, precio,cantidad;
+    int cantidad;
 
     inventario.open("inventario.txt", ios::in);
     if (inventario.is_open())
     {
-        inventario >> numeroSerie;
-
-        while (!inventario.eof())
-        {
-            inventario >> nombre;
-            inventario >> marca;
-            inventario >> tipo;
-            inventario >> categoria;
-            inventario >> precio;
-            inventario >> cantidad;
-            n = n + 1;
-            inventario >> numeroSerie;
-        }
+        inventario >> cantidad;
         inventario.close();
     }
-    return n;
+    return cantidad;
 }
 
 
@@ -98,12 +84,13 @@ int contador_usuario(ifstream &inventario)
 {
     int n = 0;
     string nombre, documentoIdentidad,correo,contrasena,id,direccion,telefono,tipo_usuario;
-
+    int cantidad;
     inventario.open("usuario.txt", ios::in);
     if (inventario.is_open())
     {
+        
         inventario >> nombre;
-
+        
         while (!inventario.eof())
         {
             inventario >> documentoIdentidad;
@@ -115,9 +102,8 @@ int contador_usuario(ifstream &inventario)
             inventario >> tipo_usuario;
             if (tipo_usuario=="CLIENTE") {
                 n = n + 1;
-            }
-            
-            inventario >>nombre ;
+            }            
+            inventario >>nombre;
         }
         inventario.close();
     }
@@ -145,7 +131,7 @@ int menuAdministrador()
 {
     system("cls");
     int x;
-    cout << "------------Esta en el modo Adminstrador-------------" << endl;
+    cout << "------------Estas en el modo Adminstrador-------------" << endl;
     
     cout << "1. Agregar productos" << endl;
     cout << "2. Ver productos" << endl;
@@ -229,7 +215,7 @@ int menuCliente()
 }
 
 
-void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, ofstream& EXP,carrito_compras &carrito1,tarjeta_visa tarjeta_1)
+void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, ofstream& EXP,tarjeta_visa tarjeta_1)
 {   
     
     int opcionAdmin = 0;
@@ -241,14 +227,17 @@ void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, 
         {
         case 1: 
             
-            clienteM.ver_productos(producto1,carrito1);
+            clienteM.ver_productos(producto1);
+            system("pause");
             break;
         case 2: 
             break;
-        case 3: 
-            carrito1.verProductos();
-            hacer_pago(tarjeta_1, carrito1);
-            break;
+        case 3:            
+            clienteM.carrito.verProductos();
+            hacer_pago(tarjeta_1, clienteM.carrito);
+            clienteM.boleta();
+            system("pause"); // por probarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+            break; 
         default:
             cout << "Por favor seleccione una opción valida";
             break;
@@ -331,7 +320,8 @@ void inciar_sesion(ifstream& inventario,cliente &cliente_1,administrador & admin
                 cout<<"lograste entrar como cliente \n";
                 
                 cliente_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
-                cliente_1.setCliente(tipo_usuario);                
+                cliente_1.setCliente(tipo_usuario);
+                //cliente_1.inicializarCarrito();
                 inventario.close();
                 system("pause");
                 return;
@@ -380,13 +370,12 @@ bool verifica_tarjeta(tarjeta_visa&tarjeta_1){
     tarjeta_cuentas.open("tarjeta_cuentas.txt", ios::in);
     if (tarjeta_cuentas.is_open()){
         cout << "---- TARJETA DE CREDITO-----\n\n";
-        cout << "Ingrese el numero de su tarjeta: ";
-        cout << "MODELO: 2949596079605124: ";
+        cout << "Ingrese el numero de su tarjeta correcto: ";        
         cin.ignore();
         getline(cin, auxnumeroTarjeta);
 
         cout << "Ingrese la fecha de vencimiento de su tarjeta: ";
-        cout << "MODELO: 03/04/2022: ";
+        cout << "Referencia: 03/04/2022: ";
         getline(cin, auxfechaVencimiento);
 
         cout << "Ingrese el codigo CVV de 3 digitos de su tarjeta: ";
@@ -428,8 +417,8 @@ void hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1)
 {
     int opcion;
     
-    cout << "1. ¿Desea comprar los productos? "<<"\n";
-    cout << "2. Quitar elemento" << "\n";
+    cout << "1. Desea comprar los productos? "<<"\n";
+    cout << "2. Quitar elementos" << "\n";
     cout << "opcion: ";
     cin >> opcion;
     if (opcion == 1)
@@ -441,7 +430,7 @@ void hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1)
     {
         carrito1.verProductos();
         string elim;
-        cout << "¿Que producto desea eliminar de su carrito1? : " << "\n";
+        cout << "¿Que producto desea eliminar de su carrito? : " << "\n";
         cin >> elim;
         bool esNumero = verifica_numero(elim);
         if (esNumero == true)

@@ -24,7 +24,7 @@ void adminMetodos(arrays_objetos & producto, administrador admin, arrays_objetos
 
 int menuCliente();
 
-void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, ofstream& EXP, carrito_compras& carrito1, tarjeta_visa tarjeta_1);
+void clienteMetodos(cliente clienteM, arrays_objetos& producto1, ifstream& Lec, ofstream& EXP, tarjeta_visa tarjeta_1);
 
 void crea_cuenta_cliente(/*cliente*& clase_cliente,*/ ofstream& inventario);
 

@@ -27,7 +27,7 @@ void arrays_objetos::set_crea_arrays_productos(ifstream & inventario)
 void arrays_objetos::setarrays_objetos(ifstream & inventario ){
 
     int m = 0;
-
+    int cantidad_total;
     string numeroSerie;
     string nombre;
     string marca;
@@ -38,7 +38,7 @@ void arrays_objetos::setarrays_objetos(ifstream & inventario ){
     inventario.open("inventario.txt", ios::in);
 
     
-    
+        inventario >> cantidad_total;
         inventario >> numeroSerie;
 
         while (!inventario.eof())

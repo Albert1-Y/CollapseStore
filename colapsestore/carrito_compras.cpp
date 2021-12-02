@@ -2,6 +2,7 @@
 #include "librerias.h"
 #include <iostream>
 #include <cstdlib>
+
 using namespace std;
 
 carrito_compras::carrito_compras()
@@ -24,8 +25,10 @@ void carrito_compras::setcarritoCompra(string _ID, string _direccion)
     direccion = _direccion;
 }
 
-void carrito_compras::productos_carritod(ifstream& productos_carritoh, arrays_objetos& _arrays_productos)
+void carrito_compras::productos_carritod(arrays_objetos& _arrays_productos)
 {
+    ifstream productos_carritoh;
+    
     string ID_busqueda, AUX_productos_carrito;
 
     //string almacen = "";
@@ -198,21 +201,4 @@ void carrito_compras::cancelarCompra(tarjeta_visa &tarjeta_1)
     }
 }
 
-void carrito_compras::boleta_de_venta() {
-
-    cout << "------------------Collapse Store------------------" << endl;
-    cout << "-----------------Boleta de Venta------------------" << endl;
-    cout << "--------------------------------------------------" << endl;
-    cout << "---------------------------------RUC: N°0000418---" << endl;
-    cout << "---------------------------------Fecha:---" << endl;
-    cout << "-Señor: " << endl;
-    cout << "-DNI: " << endl;
-    cout << "-Dirección: " << endl;
-    cout << "-Cantidad----------Descripción------------Importe-" << endl;
-
-
-    cout << "------------------------------Total---------------" << endl;
-    cout << "-------------------Cancelado----------------------" << endl;
-
-}
 

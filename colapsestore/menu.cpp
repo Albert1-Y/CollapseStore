@@ -23,8 +23,7 @@ void menu()
     carrito_compras carrito1;
     int tamano_producto = contdor_productos(Lec);
     int tamano_usuario = contador_usuario(Lec);
-    cliente cliente_unico;
-    administrador admin;
+    
     tarjeta_visa tarjeta1;
     int m = 0;
     int opcion = 0;
@@ -32,25 +31,28 @@ void menu()
     do
     {
         opcion = menu_inicial();
+        cliente cliente_unico;
+        administrador admin;
         switch (opcion)
         {
         case 1:
+            
             inciar_sesion(Lec, cliente_unico, admin);
 
 
             if (cliente_unico.codigocliente == "CLIENTE")
             {
-                carrito1.setcarritoCompra(cliente_unico.ID, cliente_unico.direccion);
-                carrito1.productos_carritod(Lec, productos1);
-
-                clienteMetodos(cliente_unico, productos1, Lec, EXP, carrito1, tarjeta1);
-                cliente_unico.codigocliente = "";
+                cliente_unico.inicializarCarrito(productos1);
+                cout << cliente_unico.carrito.ID;
+                system("pause");
+                clienteMetodos(cliente_unico, productos1, Lec, EXP, tarjeta1);
+               
 
             }
             else if (admin.codigoAministrador == "ADMINISTRADOR")
             {
                 adminMetodos(productos1, admin, productos1, tamano_usuario);
-                admin.codigoAministrador = "";
+                
             }
 
             break;
@@ -59,11 +61,12 @@ void menu()
         case 3:
             break;
         case 4:
+            cout << contdor_productos(Lec);
             system("pause");
-            for (int i = 0; i < productos1.tamano_producto; i++) {
+            /*for (int i = 0; i < productos1.tamano_producto; i++) {
                 cout << "\n";
                 cout << productos1.arrays_productos[i].precio;
-            }
+            }*/
             break;
         case 5:
 
@@ -73,4 +76,5 @@ void menu()
             break;
         }
     } while (opcion != 5);
+
 }
