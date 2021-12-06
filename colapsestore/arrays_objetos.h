@@ -10,7 +10,6 @@ class arrays_objetos
 {	
 	public:
 		productos *arrays_productos;
-		//cliente *arrays_cliente;
 		int tamano_producto;
 
 	public:

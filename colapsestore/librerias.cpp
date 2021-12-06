@@ -1,4 +1,5 @@
 #include"librerias.h"
+#include"arrays_usuarios.h"
 #include <fstream> //convertir cadenas a float
 #include <string>
 #include <iostream>
@@ -80,34 +81,21 @@ int contdor_productos(ifstream &inventario)
 }
 
 
-int contador_usuario(ifstream &inventario)
+int contador_usuario()
 {
-    int n = 0;
-    string nombre, documentoIdentidad,correo,contrasena,id,direccion,telefono,tipo_usuario;
-    int cantidad;
+    ifstream inventario;
+ 
+    int contador=0;
     inventario.open("usuario.txt", ios::in);
     if (inventario.is_open())
     {
         
-        inventario >> nombre;
+        inventario >> contador;
         
-        while (!inventario.eof())
-        {
-            inventario >> documentoIdentidad;
-            inventario >> correo,
-            inventario >> contrasena;
-            inventario >> id;
-            inventario >> direccion;
-            inventario >> telefono;
-            inventario >> tipo_usuario;
-            if (tipo_usuario=="CLIENTE") {
-                n = n + 1;
-            }            
-            inventario >>nombre;
-        }
+        
         inventario.close();
     }
-    return n;
+    return contador;
 }
 
   
@@ -138,18 +126,22 @@ int menuAdministrador()
     cout << "3. Ingresar elemento repetido " << endl;
     cout << "4. Eliminar del inventario " << endl;
     cout << "5. elimiminar unidades del producto" << endl;
-    //cout << "6. Buscar clientes" << endl;
-    //cout << "7. Ver historial de compra de una cliente" << endl;
-    cout << "6. Salir" << endl;
+    cout << "6. Lista de clientes" << endl;
+    cout << "7. Lista de administradores" << endl;
+    cout << "8. Salir" << endl;
     cin >> x;
     return x;
 }
 
 
-void adminMetodos(arrays_objetos & producto , administrador & admin,arrays_objetos &productos1  , int tamano_users)
-{
+void adminMetodos(arrays_objetos & producto , administrador & admin,arrays_objetos &productos1  , ifstream &lec)
+{   
+    
+   
     int opcionAdmin = 0;
     //int n;
+    arrays_usuarios usuarios;
+    usuarios.ser_incia_array(lec);
     do
     {
         opcionAdmin = menuAdministrador();
@@ -174,19 +166,24 @@ void adminMetodos(arrays_objetos & producto , administrador & admin,arrays_objet
             admin.elimina_unidadees_producto(productos1);
             break;
         case 6:
-            //Buscar clientes
+            usuarios.imprime_usuario();
+            system("pause");
             break;
         case 7:
-            //Ver historial de compra de una cliente
+            usuarios.imprime_admin();
+            system("pause");
+            break;
+        case 8:
             break;
         default:
+            
             cout << "Por favor seleccione una opción valida";
             break;
         }
 
 
     }
-    while (opcionAdmin != 6);
+    while (opcionAdmin != 8);
     
 }
 
@@ -256,7 +253,8 @@ void clienteMetodos(cliente &clienteM, arrays_objetos& producto1, ifstream& Lec,
 void crea_cuenta_cliente(cliente & cliente_1)
 {
     ofstream inventario;
-
+    
+    inventario.open("auxi_inventario.txt", ios::out | ios::app);
     string nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono, tipo_usuario;
     tipo_usuario = "CLIENTE";
     cout << "Digite su nombre completo: ";
@@ -275,22 +273,18 @@ void crea_cuenta_cliente(cliente & cliente_1)
     cout << "Digite una contraseña: ";
     getline(cin, contrasena);
 
-    cliente_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
-    cliente_1.setCliente(tipo_usuario);
-
-    inventario.open("usuario.txt", ios::out | ios::app);
-
-    inventario << nombre << " " << documentoIdentidad << " " << correo << " " << contrasena << " " << id << " " << direccion << " " << telefono << " " << tipo_usuario << "\n";
-    // cout<<clase_cliente[0].nombre;
-    inventario.close();
-
+    cliente_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono,tipo_usuario);
+    inventario << nombre << " " << documentoIdentidad << " " << correo << " " << contrasena << " " << id << " " << direccion << " " << telefono << " " << tipo_usuario <<" "<<0<< "\n";
 }
 
 
 void inciar_sesion(ifstream& inventario,cliente &cliente_1,administrador & administrador_1)
 {
+    int contador;
     string nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono, tipo_usuario;
-    string auxiID,auxcontrasena;
+    string auxiID, auxcontrasena;
+    int cantidad_productos_comprados;
+    double sueldo_administrador;
     inventario.open("usuario.txt", ios::in);
     if (inventario.is_open())
     {
@@ -300,6 +294,7 @@ void inciar_sesion(ifstream& inventario,cliente &cliente_1,administrador & admin
         getline(cin, auxiID);
         cout << "Ingrese su contraseña: ";
         getline(cin, auxcontrasena);
+        inventario >> contador;
         inventario >>nombre;
         while (!inventario.eof())
         {
@@ -310,13 +305,23 @@ void inciar_sesion(ifstream& inventario,cliente &cliente_1,administrador & admin
             inventario >> direccion;
             inventario >> telefono;
             inventario >> tipo_usuario;
+           
+            if (tipo_usuario == "CLIENTE")
+                inventario >> cantidad_productos_comprados;
+            else
+                inventario >> sueldo_administrador;
+
+            cout << id << "\n";
+            
+            
+
             if (auxiID == id && auxcontrasena == contrasena && tipo_usuario == "CLIENTE")
             {
+                
                 cout<<"lograste entrar como cliente \n";
                 
-                cliente_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
-                cliente_1.setCliente(tipo_usuario);
-                //cliente_1.inicializarCarrito();
+                cliente_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono, tipo_usuario);
+                cliente_1.setCliente(cantidad_productos_comprados);
                 inventario.close();
                 system("pause");
                 return;
@@ -324,11 +329,12 @@ void inciar_sesion(ifstream& inventario,cliente &cliente_1,administrador & admin
             }
             else if (auxiID == id && auxcontrasena == contrasena && tipo_usuario == "ADMINISTRADOR") {
                 cout << "lograste entrar como admin\n";
-           
-                administrador_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono);
-                administrador_1.setadmin(tipo_usuario);
-                system("pause");
+                
+                administrador_1.setUsuario(nombre, documentoIdentidad, correo, contrasena, id, direccion, telefono,tipo_usuario);
+                administrador_1.setadmin(sueldo_administrador);
+                      
                 inventario.close();
+                system("pause");
                 return;
             }
 
@@ -401,7 +407,7 @@ void menu_hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1,cliente
     
     cout << "1. Desea comprar los productos? "<<"\n";
     cout << "2. Quitar elementos" << "\n";
-    cout << "opcion: ";
+    cout << "Opcion: ";
     cin >> opcions;
     if (opcions == 1)
     {
@@ -413,6 +419,8 @@ void menu_hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1,cliente
                 system("cls");
                 carrito1.cancelarCompra(tarjeta1);
                 cliente1.boleta();
+                carrito1.~carrito_compras();
+                
 
             }
             else {
@@ -442,14 +450,23 @@ void menu_hacer_pago(tarjeta_visa & tarjeta1, carrito_compras & carrito1,cliente
         cout << "No existe esa opcion\n";
     }
 }
-void actulizar_inventario(arrays_objetos producto1) {
+
+//
+
+
+void actulizar_inventario(arrays_objetos &producto1)
+{
+
     ofstream inventario;
     inventario.open("auxi_inventario.txt", ios::out | ios::app);
     inventario << producto1.tamano_producto << "\n";
-    for (int i = 0; i < producto1.tamano_producto; i++) {
+
+    for (int i = 0; i < producto1.tamano_producto; i++)
+    {
         inventario << nosepara(producto1.arrays_productos[i].numeroSerie) << " " << nosepara(producto1.arrays_productos[i].nombre) << " " << nosepara(producto1.arrays_productos[i].marca) << " " << nosepara(producto1.arrays_productos[i].categoria) << " " << nosepara(producto1.arrays_productos[i].tipo) << " " << producto1.arrays_productos[i].precio << " " << producto1.arrays_productos[i].cantidad << "\n";
     }
     inventario.close();
     remove("inventario.txt");
     rename("auxi_inventario.txt", "inventario.txt");
+
 }

@@ -19,10 +19,12 @@ class carrito_compras
 		carrito_compras();
 		~carrito_compras();
 		void setcarritoCompra(string _ID, string _direccion);
+		bool verificar_carrito(arrays_objetos& productos1, productos& propudcto_particular);
 		void productos_carritod(arrays_objetos& _arrays_productos);
 		void agregarProducto(productos &_producto1);
 		void eliminarProducto(int _producto_eliminar);
 		void verProductos();
 		void cancelarCompra(tarjeta_visa& tarjeta_1);
+		
 		
 };

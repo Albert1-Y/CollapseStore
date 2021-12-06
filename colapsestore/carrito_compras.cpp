@@ -16,12 +16,14 @@ carrito_compras::carrito_compras()
 
 carrito_compras::~carrito_compras()
 {
-   
-   if (productos_carrito != nullptr) {
-        delete[] productos_carrito;
-        }
-    }
 
+    if (productos_carrito != nullptr) {
+
+        delete[] productos_carrito;
+        
+        contador_productos = 0;
+    }
+}
 
 void carrito_compras::setcarritoCompra(string _ID, string _direccion)
 {
@@ -97,19 +99,20 @@ void carrito_compras::productos_carritod(arrays_objetos& _arrays_productos)
         }
         productos_carritoh.close();
     }
-    
-    productos_carrito = new productos[contador_productos];
+    if (contador_productos > 0) {
+        productos_carrito = new productos[contador_productos];
 
-    int contador_entradas = 0;
+        int contador_entradas = 0;
 
-    for (int i = 0; i < contador_productos; i++)
-    {
-        for (int j = 0; j < _arrays_productos.tamano_producto; j++)
+        for (int i = 0; i < contador_productos; i++)
         {
-            if (origi[i] == _arrays_productos.arrays_productos[j].numeroSerie)
+            for (int j = 0; j < _arrays_productos.tamano_producto; j++)
             {
-                productos_carrito[i] = _arrays_productos.arrays_productos[j];
+                if (origi[i] == _arrays_productos.arrays_productos[j].numeroSerie)
+                {
+                    productos_carrito[i] = _arrays_productos.arrays_productos[j];
 
+                }
             }
         }
     }
@@ -117,6 +120,24 @@ void carrito_compras::productos_carritod(arrays_objetos& _arrays_productos)
     delete[] origi;
 }
 
+bool carrito_compras::verificar_carrito(arrays_objetos& productos1,productos& propudcto_particular) {
+    
+    for (int j = 0; j < productos1.tamano_producto; j++) {
+        if (propudcto_particular.numeroSerie == productos1.arrays_productos[j].numeroSerie) {
+            if (stoi(productos1.arrays_productos[j].cantidad) <= 0) {
+                cout << "\nEl prodcto se encuentra agotado\n";
+                cout << "\nPodria elejir otro producto\n";
+                return false;
+            }
+            else
+                return true;
+
+            }
+        }
+    
+
+
+}
 void carrito_compras::agregarProducto(productos &_producto1)
 {
     productos* auxiproducto = new productos[ contador_productos + 1 ];
@@ -126,7 +147,10 @@ void carrito_compras::agregarProducto(productos &_producto1)
     }
 
     auxiproducto[contador_productos] = _producto1;
-    delete[] productos_carrito; 
+
+    if (contador_productos != 0) {
+        delete[] productos_carrito;
+    }
     productos_carrito = new productos[(contador_productos )+ 1];
 
     for (int i = 0; i < contador_productos+1; i++)
@@ -159,7 +183,7 @@ void carrito_compras::eliminarProducto(int _producto_eliminar)
 
     for(int j = 0; j < contador_productos - 1; j++)
     {
-        auxiproducto[j] = productos_carrito[j];
+        productos_carrito[j] = auxiproducto[j];
     }
 
     contador_productos--;
@@ -170,7 +194,8 @@ void carrito_compras::eliminarProducto(int _producto_eliminar)
 
 void carrito_compras::verProductos()
 {
-    for (int i = 0; i <contador_productos; i++)
+    
+     for (int i = 0; i <contador_productos; i++)
     {
 
         cout << productos_carrito[i].tipo <<" ";
@@ -192,11 +217,12 @@ void carrito_compras::cancelarCompra(tarjeta_visa& tarjeta_1)
     if (contador_productos != 0)
     {
 
-        cout << "Tu saldo actual: " << tarjeta_1.saldo << "\n";
+        cout << "Tu saldo antes de hacer la compra : " << tarjeta_1.saldo << "\n";
 
         tarjeta_1.saldo = tarjeta_1.saldo - sumaTotal;
 
-        cout << "Tu saldo actual: " << tarjeta_1.saldo << "\n";
+        cout << "Tu saldo actual : " << tarjeta_1.saldo << "\n";
+
 
     }
 
@@ -205,6 +231,7 @@ void carrito_compras::cancelarCompra(tarjeta_visa& tarjeta_1)
         cout << "\nNo hya productos que comprar\n";
     }
 }
+
 
 
 

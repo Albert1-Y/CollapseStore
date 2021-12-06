@@ -13,7 +13,8 @@ arrays_objetos::arrays_objetos()
 arrays_objetos::~arrays_objetos()
 {
     //delete[] arrays_cliente;
-    delete[] arrays_productos;
+    if (arrays_productos!=nullptr) 
+        delete[] arrays_productos;
 }
 
 void arrays_objetos::set_crea_arrays_productos(ifstream & inventario)

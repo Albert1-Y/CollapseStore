@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="administrador.cpp" />
     <ClCompile Include="arrays_objetos.cpp" />
+    <ClCompile Include="arrays_usuarios.cpp" />
     <ClCompile Include="carrito_compras.cpp" />
     <ClCompile Include="cliente.cpp" />
     <ClCompile Include="librerias.cpp" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="administrador.h" />
     <ClInclude Include="arrays_objetos.h" />
+    <ClInclude Include="arrays_usuarios.h" />
     <ClInclude Include="carrito_compras.h" />
     <ClInclude Include="cliente.h" />
     <ClInclude Include="librerias.h" />

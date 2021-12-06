@@ -3,14 +3,22 @@
 #include "librerias.h"
 using namespace std;
 
+
 administrador::administrador()
 {
-    codigoAministrador = "";
+    sueldo_administrador = 0;
 }
 
-void administrador::setadmin(string _codigoAministrador)
+
+administrador::administrador(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono, string _tipo_usuario, double _sueldo_administrador) : usuario(_nombre, _documentoIdentidad, _correo, _contrasena, _ID, _direccion, _telefono, _tipo_usuario)
 {
-    codigoAministrador = _codigoAministrador;
+    sueldo_administrador = _sueldo_administrador;
+}
+
+
+void administrador::setadmin(double _sueldo_administrador)
+{
+    sueldo_administrador = _sueldo_administrador;
 }
 
 
@@ -80,6 +88,7 @@ void administrador::ver_productos(arrays_objetos& arrays_producto)
         cout << "Categoria del producto------: " << arrays_producto.arrays_productos[i].categoria << endl;
         cout << "Tipo del producto-----------: " << arrays_producto.arrays_productos[i].tipo << endl;
         cout << "Precio del producto---------: " << arrays_producto.arrays_productos[i].precio << endl;
+        cout << "cantidad del producto---------: " << arrays_producto.arrays_productos[i].cantidad << endl;
         cout << "------------------------------------------" << endl;
 
     }
@@ -92,13 +101,14 @@ void administrador::ingresando_elementos_repetidos(arrays_objetos& arrays_produc
 {
     string busca_n_serie;
     cout << "Ingrese el numero de Serie: ";
+    cin.ignore();
     getline(cin, busca_n_serie);
     for (int i = 0; i < arrays_producto.tamano_producto; i++) {
         if (busca_n_serie == arrays_producto.arrays_productos[i].numeroSerie) {
             int n_producto = 0;
             cout << "Cuantas productos mas agregara: ";
             cin>>n_producto;
-            arrays_producto.arrays_productos[i].cantidad = stoi((arrays_producto.arrays_productos[i].cantidad)) + n_producto;
+            arrays_producto.arrays_productos[i].cantidad = to_string(stoi((arrays_producto.arrays_productos[i].cantidad)) + n_producto);
             
             return;
         }
@@ -156,13 +166,28 @@ void administrador::eliminar_inventario(arrays_objetos& arrays_producto){
 }
 void administrador::elimina_unidadees_producto(arrays_objetos& arrays_producto) {
     string n_serie;
+    int pregunta;
     cout << "Ingrese el numero de serie del producto: ";
+    cin.ignore();
     getline(cin, n_serie);
     for (int i = 0; i < arrays_producto.tamano_producto; i++) {
         if (n_serie==arrays_producto.arrays_productos[i].numeroSerie) {
             int n_elementos = stoi(arrays_producto.arrays_productos[i].cantidad);
             
             cout << "Cuantos elementos deseas quitar:";
+            cin >> pregunta;
+            if ((stoi((arrays_producto.arrays_productos[i].cantidad)) - pregunta) <= 0) {
+                arrays_producto.arrays_productos[i].cantidad = to_string(stoi((arrays_producto.arrays_productos[i].cantidad)) + pregunta);
+
+            }
+            else
+                cout << "\nCANTIDAD NO PERMITIDA\n";
+                system("pause");
+
         }
     }
+}
+void administrador::imprime() {
+    usuario::imprime();
+    cout << "Sueldo: " << sueldo_administrador << "\n";
 }

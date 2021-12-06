@@ -15,14 +15,13 @@ class usuario{
 		string ID;
 		string direccion;
 		string telefono;
+		string tipo_usuario;
 
 	public:
+		usuario(string, string, string, string, string, string, string, string);
 		usuario();
-		void setUsuario(string, string, string, string, string, string, string);
-
-		//metodos:
-		//void registrar_usuario();
-		//void logear_usuario();
+		void setUsuario(string, string, string, string, string, string, string,string);
+		virtual void imprime();
 };
 
 

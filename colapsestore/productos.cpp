@@ -1,7 +1,6 @@
 #include "productos.h"
 #include <Windows.h>
 
-
 using namespace std;
 
 productos::productos()

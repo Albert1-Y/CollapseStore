@@ -1,6 +1,5 @@
 #include "tarjeta_visa.h"
 
-
 tarjeta_visa::tarjeta_visa(){
 		saldo = 0;
 		numeroTarjeta  = "";

@@ -8,19 +8,27 @@
 #include "cliente.h"
 #include "librerias.h"
 
-
-
 using namespace std;
 
+
+
+cliente::cliente(string _nombre, string _documentoIdentidad, string _correo, string _contrasena, string _ID, string _direccion, string _telefono, string _tipo_usuario, int _cantidad_productos_comprados) : usuario(_nombre, _documentoIdentidad, _correo, _contrasena, _ID, _direccion, _telefono, _tipo_usuario)
+{
+    cantidad_productos_comprados = _cantidad_productos_comprados;
+}
 cliente::cliente()
 {
-    codigocliente = "";
+    cantidad_productos_comprados = 0;
 }
 
-
-void cliente::setCliente(string _codigocliente)
+void cliente::imprime() {
+    usuario::imprime();
+    cout << "Cantidad productos comprados: " <<cantidad_productos_comprados<<"\n";
+    
+}
+void cliente::setCliente(int _cantidad_productos_comprados)
 {
-    codigocliente = _codigocliente;
+    cantidad_productos_comprados = _cantidad_productos_comprados;
     
 }
 
@@ -37,12 +45,17 @@ void cliente::ver_productos(arrays_objetos& producto)
     int opcion = 0;
     cout << "Que producto quieres agregar a tu carroto de compras (si deseas salir ingrase 0): ";
     cin >> opcion;
-
+    bool comp=false;
     if (opcion != 0 && opcion <= producto.tamano_producto)
     {
-        carrito.agregarProducto(producto.arrays_productos[opcion - 1]);
-        cout << "se ha agragado con exito" << endl;
-        system("pause");
+        comp=carrito.verificar_carrito(producto, producto.arrays_productos[opcion - 1]);
+        if (comp) {
+            carrito.agregarProducto(producto.arrays_productos[opcion - 1]);
+            cout << "se ha agragado con exito" << endl;
+            system("pause");
+        }
+         
+       
     }
 
 }

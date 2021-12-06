@@ -8,7 +8,6 @@ using namespace std;
 class productos
 {
 	public:
-
 		string nombre; // numeder serie
 		string numeroSerie;
 		string marca;		

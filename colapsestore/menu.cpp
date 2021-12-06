@@ -1,11 +1,10 @@
 #include "menu.h"
 #include "productos.h"
-#include "usuario.h"
 #include "librerias.h"
 #include "arrays_objetos.h"
 #include "administrador.h"
-
-#include <iostream>
+#include"arrays_usuarios.h"
+//#include <iostream>
 #include <string>
 #include <fstream>
 #include <cstdlib>
@@ -21,13 +20,11 @@ void menu()
     productos1.set_crea_arrays_productos(Lec);
     productos1.setarrays_objetos(Lec);
     int tamano_producto = contdor_productos(Lec);
-    int tamano_usuario = contador_usuario(Lec);
+    int tamano_usuario = contador_usuario();
     tarjeta_visa tarjeta1;
     int m = 0;
     int opcion = 0;
-    //cliente cliente_unico;
-    //administrador admin;
-    //cliente cliente_unico;
+    
     do
     {
         administrador admin;
@@ -41,7 +38,7 @@ void menu()
             inciar_sesion(Lec, cliente_unico, admin);
 
 
-            if (cliente_unico.codigocliente == "CLIENTE")
+            if (cliente_unico.tipo_usuario == "CLIENTE")
             {
                 cliente_unico.inicializarCarrito(productos1);
                 
@@ -50,9 +47,9 @@ void menu()
                
             
             }
-            else if (admin.codigoAministrador == "ADMINISTRADOR")
-            {
-                adminMetodos(productos1, admin, productos1, tamano_usuario);
+            else if (admin.tipo_usuario == "ADMINISTRADOR")
+            {   
+                adminMetodos(productos1, admin, productos1,Lec);
                 admin.~administrador();
             }
             break;
@@ -64,6 +61,8 @@ void menu()
       
             break;
         case 3:
+            
+            system("pause");
             break;
         default:
             if (opcion !=4) {
@@ -73,5 +72,8 @@ void menu()
         }
 
     } while (opcion != 4);
+   ;
     actulizar_inventario(productos1);
+    
+    return;
 }
